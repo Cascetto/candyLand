@@ -6,6 +6,7 @@
 
 std::shared_ptr<Bullet> GameFactory::makeBullet(sf::Vector2f direction, bool friendly) {
     auto bullet = std::make_shared<Bullet>(direction, 50, friendly);
+    std::cout<<"ciao";
     return bullet;
 }
 
