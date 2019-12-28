@@ -8,8 +8,6 @@
 #include "GameState.h"
 #include "../GameEngine.h"
 #include "../../GameCharacter/Hero.h"
-#include "../../GameCharacter/Enemy/Watcher.h"
-#include "../../GameCharacter/Enemy/Brawler.h"
 #include "../../GameObjects/Bullet.h"
 
 #include <list>
@@ -40,7 +38,7 @@ private:
     float groundLevel;
     unsigned point {0};
     std::shared_ptr<Hero> hero;
-    std::vector<std::shared_ptr<Enemy>> enemies;
+    std::vector<GameCharacter*> enemies;
     std::vector<std::shared_ptr<Bullet>> bullets;
 
 };

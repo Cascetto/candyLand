@@ -26,7 +26,6 @@ set(SOURCE_FILES
 
         GameCharacter/GameCharacter.cpp
         GameCharacter/Hero.cpp
-        GameCharacter/Enemy/Enemy.cpp
         GameCharacter/Enemy/Watcher.cpp
         GameCharacter/Enemy/Brawler.cpp
         )

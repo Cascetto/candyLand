@@ -23,8 +23,6 @@ PlayState::PlayState(TargetWindow targetWindow) : GameState(std::move(targetWind
     hero->setPosition(200, 200);
     hero->scale(3, 3);
 
-    enemies.emplace_back(e);
-
     Timer::resetMainTime();
 }
 
@@ -48,6 +46,8 @@ void PlayState::handleSincInput() {
             else if(event.key.code == sf::Keyboard::Z) {
                 GameEngine::getGameEngine()->getStateHandler().removeState();
             }
+            else if(event.key.code == sf::Keyboard::N)
+                enemies.emplace_back(GameFactory::makeEnemy(gravity));
         }
     }
 }
@@ -111,7 +111,10 @@ void PlayState::update() {
             bullets.erase(bullets.begin() + i);
         }
     }
-    for (auto const& enemy : enemies) enemy->action(heroPos);
+    for (auto const& enemy : enemies) {
+        enemy->action(heroPos);
+        enemy->fixHeight(groundLevel);
+    }
 }
 
 bool PlayState::detectCollision(std::shared_ptr<Bullet> &bullet) {

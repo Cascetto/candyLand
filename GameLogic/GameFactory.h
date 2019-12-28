@@ -7,12 +7,12 @@
 
 #include <memory>
 #include "../GameObjects/Bullet.h"
-#include "../GameCharacter/Enemy/Enemy.h"
+#include "../GameCharacter/Enemy/Brawler.h"
 
 class GameFactory {
 public:
     static std::shared_ptr<Bullet> makeBullet(sf::Vector2f direction, bool friendly = false);
-    static std::shared_ptr<Enemy> makeEnemy(float gravity);
+    static GameCharacter* makeEnemy(float gravity);
 };
 
 

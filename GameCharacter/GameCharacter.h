@@ -16,6 +16,7 @@ public:
     virtual void move(sf::Vector2f direction);
     int revert{0};
     bool takeDamage();
+    virtual void action(sf::Vector2f heroPos) = 0;
 
 protected:
     GameCharacter(float speed, sf::Texture& texture, float g);
