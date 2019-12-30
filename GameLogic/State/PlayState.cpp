@@ -23,7 +23,7 @@ PlayState::PlayState(TargetWindow targetWindow) : GameState(std::move(targetWind
     hero->setPosition(200, 200);
     hero->scale(3, 3);
 
-    enemies.emplace_back(e);
+    //enemies.emplace_back(e);
 
     Timer::resetMainTime();
 }
