@@ -21,6 +21,7 @@ set(SOURCE_FILES
 
         GameObjects/Star.cpp
         GameObjects/Bullet.cpp
+        GameObjects/Platform.cpp
 
         GUI/Menu.cpp
 
@@ -28,6 +29,7 @@ set(SOURCE_FILES
         GameCharacter/Hero.cpp
         GameCharacter/Enemy/Watcher.cpp
         GameCharacter/Enemy/Brawler.cpp
+        GameCharacter/Enemy/Archer.cpp
         )
 
 link_directories(./sfml/lib)

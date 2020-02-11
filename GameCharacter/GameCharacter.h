@@ -22,6 +22,12 @@ protected:
     GameCharacter(float speed, sf::Texture& texture, float g);
     ~GameCharacter() override;
     sf::Vector2f speed;
+public:
+    const sf::Vector2f &getSpeed() const;
+
+    void setSpeed(const sf::Vector2f &speed);
+
+protected:
     virtual void animate() = 0;
     int frameCounter {0};
 
