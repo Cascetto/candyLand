@@ -6,8 +6,10 @@
 #define ISANGRYREVISED_WATCHER_H
 
 #include "../../GameLogic/AssetManager.h"
-#include "../Enemy/Enemy.h"
-class Watcher : public Enemy {
+#include "../GameCharacter.h"
+#include "../../GameLogic/GameEngine.h"
+
+class Watcher : public GameCharacter {
 public:
     Watcher(float speed, float g);
     void animate() override;

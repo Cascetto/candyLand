@@ -6,10 +6,10 @@
 
 std::shared_ptr<Bullet> GameFactory::makeBullet(sf::Vector2f direction, bool friendly) {
     auto bullet = std::make_shared<Bullet>(direction, 50, friendly);
-    std::cout<<"ciao";
     return bullet;
 }
 
-std::shared_ptr<Enemy> GameFactory::makeEnemy(float gravity) {
-    auto enemy = std::make_shared<Brawler>(0, gravity);
+GameCharacter* GameFactory::makeEnemy(float gravity) {
+    auto enemy = new Brawler(5, 50);
+    return enemy;
 }

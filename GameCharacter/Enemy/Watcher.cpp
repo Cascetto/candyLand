@@ -4,7 +4,7 @@
 
 #include "Watcher.h"
 
-Watcher::Watcher(float speed, float g) : Enemy(speed, *AssetManager::watcherTexture, g) {
+Watcher::Watcher(float speed, float g) : GameCharacter(speed, *AssetManager::watcherTexture, g) {
     setTextureRect(sf::IntRect(0, 0, 680, 472));
     updateRange();
 }

@@ -36,3 +36,7 @@ std::shared_ptr<Bullet> Hero::shoot(float time) {
     }
     return bullet;
 }
+
+void Hero::action(sf::Vector2f heroPos) {
+
+}

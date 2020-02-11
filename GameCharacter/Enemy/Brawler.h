@@ -6,8 +6,9 @@
 #define ISANGRYREVISED_BRAWLER_H
 
 #include "../../GameLogic/AssetManager.h"
-#include "../Enemy/Enemy.h"
-class Brawler : public Enemy {
+#include "../GameCharacter.h"
+
+class Brawler : public GameCharacter {
 public:
     Brawler(float speed, float g);
     void animate() override;
