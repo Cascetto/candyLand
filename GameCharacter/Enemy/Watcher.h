@@ -7,15 +7,14 @@
 
 #include "../../GameLogic/AssetManager.h"
 #include "../GameCharacter.h"
-#include "../../GameLogic/GameEngine.h"
 
 class Watcher : public GameCharacter {
 public:
-    Watcher(float speed, float g);
+    Watcher(float range, float g);
     void animate() override;
     void update() override;
     void action(sf::Vector2f heroPos) override;
-    void updateRange();
+    void updateRange(float range);
     void fadeOut();
     void fadeIn();
 

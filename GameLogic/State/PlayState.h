@@ -40,6 +40,7 @@ private:
     std::shared_ptr<Hero> hero;
     std::vector<GameCharacter*> enemies;
     std::vector<std::shared_ptr<Bullet>> bullets;
+    void fixHeight();
 
 };
 

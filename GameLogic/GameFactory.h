@@ -8,7 +8,8 @@
 #include <memory>
 #include "../GameObjects/Bullet.h"
 #include "../GameCharacter/Enemy/Brawler.h"
-
+#include "../GameCharacter/Enemy/Watcher.h"
+#include "../GameCharacter/Enemy/Archer.h"
 class GameFactory {
 public:
     static std::shared_ptr<Bullet> makeBullet(sf::Vector2f direction, bool friendly = false);

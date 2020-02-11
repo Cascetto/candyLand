@@ -10,6 +10,8 @@ std::shared_ptr<Bullet> GameFactory::makeBullet(sf::Vector2f direction, bool fri
 }
 
 GameCharacter* GameFactory::makeEnemy(float gravity) {
-    auto enemy = new Brawler(5, 50);
+    auto enemy = new Watcher(200, 50);
+    //auto enemy = new Archer(200, 50);
+    enemy->setPosition(1500, 400);
     return enemy;
 }

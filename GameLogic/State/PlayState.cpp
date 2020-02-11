@@ -46,8 +46,9 @@ void PlayState::handleSincInput() {
             else if(event.key.code == sf::Keyboard::Z) {
                 GameEngine::getGameEngine()->getStateHandler().removeState();
             }
-            else if(event.key.code == sf::Keyboard::N)
+            else if(event.key.code == sf::Keyboard::N){
                 enemies.emplace_back(GameFactory::makeEnemy(gravity));
+            }
         }
     }
 }
@@ -77,7 +78,7 @@ void PlayState::handleControls() {
 void PlayState::computeFrame() {
     moveView();
     handleControls();
-    hero->fixHeight(groundLevel);
+    //hero->fixHeight(groundLevel);
 }
 
 void PlayState::moveView() {
@@ -99,9 +100,23 @@ void PlayState::drawFrame() {
     targetWindow->draw(*hero);
     for(const auto& e : enemies) targetWindow->draw(*e);
     for(const auto& bullet : bullets) targetWindow->draw(*bullet);
+    sf::VertexArray rect(sf::LinesStrip, 5);
+    rect[0].position = sf::Vector2f(1500, 700);
+    rect[0].color = sf::Color::Black;
+    rect[1].position = sf::Vector2f(2000, 700);
+    rect[1].color = sf::Color::Black;
+    rect[2].position = sf::Vector2f(2000, 750);
+    rect[2].color = sf::Color::Black;
+    rect[3].position = sf::Vector2f(1500, 750);
+    rect[3].color = sf::Color::Black;
+    rect[4].position = sf::Vector2f(1500, 700);
+    rect[4].color = sf::Color::Black;
+    targetWindow->draw(rect);
+
 }
 
 void PlayState::update() {
+    fixHeight();
     auto heroPos = hero->getPosition();
     for (unsigned long i = 0; i < bullets.size(); i++) {
         bullets[i]->move();
@@ -113,7 +128,7 @@ void PlayState::update() {
     }
     for (auto const& enemy : enemies) {
         enemy->action(heroPos);
-        enemy->fixHeight(groundLevel);
+        //enemy->fixHeight(groundLevel);
     }
 }
 
@@ -141,3 +156,31 @@ bool PlayState::isOutside(sf::Vector2f bottomRight) {
     auto topLeft = targetWindow->getView().getCenter() - (targetWindow->getView().getSize() / 2.f);
     return bottomRight.x < topLeft.x || bottomRight.y < topLeft.y || bottomRight.x > topLeft.x + targetWindow->getView().getSize().x * 2;
 }
+
+void PlayState::fixHeight() {
+    for (auto i : enemies) {
+        float toe = i->getPosition().y + i->getGlobalBounds().height;
+        float left = i->getPosition().x;
+        float right= left + i->getGlobalBounds().width;
+        if(toe > groundLevel){
+            i->setPosition(left,groundLevel-(i->getGlobalBounds().height));
+            sf::Vector2f newSpeed(i->getSpeed().x, 0);
+        }
+
+
+
+
+    }
+    float toe = hero->getPosition().y + hero->getGlobalBounds().height;
+    float left = hero->getPosition().x;
+    float right= left + hero->getGlobalBounds().width;
+    if(toe > groundLevel){
+        hero->setPosition(left,groundLevel-(hero->getGlobalBounds().height));
+        sf::Vector2f newSpeed(hero->getSpeed().x, 0);
+    }
+
+}
+
+
+
+

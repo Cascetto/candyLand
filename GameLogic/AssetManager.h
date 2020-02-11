@@ -17,7 +17,9 @@ public:
     static std::unique_ptr<sf::Texture> heroTexture;
     static std::unique_ptr<sf::Texture> watcherTexture;
     static std::unique_ptr<sf::Texture> brawlerTexture;
+    static std::unique_ptr<sf::Texture> archerTexture;
     static std::unique_ptr<sf::Texture> coconutTexture;
+    static std::unique_ptr<sf::Texture> platformTexture;
 
 
 };
