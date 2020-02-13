@@ -12,6 +12,12 @@
 class Platform : public sf::Sprite{
 public:
     Platform();
+    float left;
+    float right;
+    float top;
+    void setPosition(float x,float y);
+
+
 
 
 };

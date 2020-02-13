@@ -9,7 +9,7 @@
 #include "../GameEngine.h"
 #include "../../GameCharacter/Hero.h"
 #include "../../GameObjects/Bullet.h"
-
+#include "../../GameObjects/Platform.h"
 #include <list>
 
 
@@ -41,6 +41,7 @@ private:
     std::vector<GameCharacter*> enemies;
     std::vector<std::shared_ptr<Bullet>> bullets;
     void fixHeight();
+    std::vector<Platform> platforms;
 
 };
 

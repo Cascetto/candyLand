@@ -23,6 +23,14 @@ PlayState::PlayState(TargetWindow targetWindow) : GameState(std::move(targetWind
     hero->setPosition(200, 200);
     hero->scale(3, 3);
 
+
+    platforms.emplace_back(Platform());
+    platforms.emplace_back(Platform());
+    platforms.emplace_back(Platform());
+    platforms[0].setPosition(500, 500);
+    platforms[1].setPosition(1000, 500);
+    platforms[2].setPosition(1500, 500);
+
     Timer::resetMainTime();
 }
 
@@ -100,18 +108,8 @@ void PlayState::drawFrame() {
     targetWindow->draw(*hero);
     for(const auto& e : enemies) targetWindow->draw(*e);
     for(const auto& bullet : bullets) targetWindow->draw(*bullet);
-    sf::VertexArray rect(sf::LinesStrip, 5);
-    rect[0].position = sf::Vector2f(1500, 700);
-    rect[0].color = sf::Color::Black;
-    rect[1].position = sf::Vector2f(2000, 700);
-    rect[1].color = sf::Color::Black;
-    rect[2].position = sf::Vector2f(2000, 750);
-    rect[2].color = sf::Color::Black;
-    rect[3].position = sf::Vector2f(1500, 750);
-    rect[3].color = sf::Color::Black;
-    rect[4].position = sf::Vector2f(1500, 700);
-    rect[4].color = sf::Color::Black;
-    targetWindow->draw(rect);
+    for(const auto& platform : platforms) targetWindow->draw(platform);
+
 
 }
 
@@ -180,7 +178,19 @@ void PlayState::fixHeight() {
         sf::Vector2f newSpeed(hero->getSpeed().x, 0);
         hero->setSpeed(newSpeed);
     }
+    for(const auto &i : platforms){
+        if(((i.left <= left && i.right >= left) || (i.left <= right && i.right >= right)) && i.top < toe <= i.top+10){
+            hero->move(sf::Vector2f(0,(i.top - toe)));
+            sf::Vector2f newSpeed(hero->getSpeed().x, 0);
+            // TODO nemici
+        }
 
+
+
+
+
+
+    }
 }
 
 
