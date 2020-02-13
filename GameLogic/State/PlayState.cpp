@@ -165,6 +165,7 @@ void PlayState::fixHeight() {
         if(toe > groundLevel){
             i->setPosition(left,groundLevel-(i->getGlobalBounds().height));
             sf::Vector2f newSpeed(i->getSpeed().x, 0);
+            i->setSpeed(newSpeed);
         }
 
 
@@ -177,6 +178,7 @@ void PlayState::fixHeight() {
     if(toe > groundLevel){
         hero->setPosition(left,groundLevel-(hero->getGlobalBounds().height));
         sf::Vector2f newSpeed(hero->getSpeed().x, 0);
+        hero->setSpeed(newSpeed);
     }
 
 }
