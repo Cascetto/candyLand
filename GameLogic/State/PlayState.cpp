@@ -25,7 +25,7 @@ PlayState::PlayState(TargetWindow targetWindow) : GameState(std::move(targetWind
 
 
     platforms.emplace_back(Platform());
-    platforms[0].setPosition(2000, 700);
+    platforms[0].setPosition(2000, 600);
 
     Timer::resetMainTime();
 }
