@@ -31,7 +31,7 @@ void AssetManager::load() {
         brawlerTexture->loadFromFile("../Assets/Images/lanter_walk_original.png");
         //archerTexture->loadFromFile("../Assets/Images/archer.png");
         coconutTexture->loadFromFile("../Assets/Images/coconut.png");
-        platformTexture->loadFromFile( "../Assets/Images/coconut.png");
+        platformTexture->loadFromFile( "../Assets/Images/platform.png");
 
     } catch (const std::exception& exception) {
         std::cerr << exception.what() << std::endl;

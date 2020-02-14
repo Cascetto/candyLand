@@ -16,6 +16,8 @@
 
 #define GAME_SPEED 200
 
+//TODO funzione difficoltà lv = 6 - (5/e((time - score/10))/100)
+
 class PlayState : public GameState {
 public:
     explicit PlayState(TargetWindow targetWindow);
@@ -29,6 +31,7 @@ public:
 
 
 private:
+    short int level;
     bool detectCollision(std::shared_ptr<Bullet>& bullet);
     void moveView();
 

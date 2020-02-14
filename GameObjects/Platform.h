@@ -15,7 +15,9 @@ public:
     float left;
     float right;
     float top;
-    void setPosition(float x,float y);
+    const float height {98};
+    const float width {424};
+    void setPosition(float x, float y);
 
 
 

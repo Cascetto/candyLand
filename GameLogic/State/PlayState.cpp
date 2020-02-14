@@ -25,11 +25,7 @@ PlayState::PlayState(TargetWindow targetWindow) : GameState(std::move(targetWind
 
 
     platforms.emplace_back(Platform());
-    platforms.emplace_back(Platform());
-    platforms.emplace_back(Platform());
-    platforms[0].setPosition(500, 500);
-    platforms[1].setPosition(1000, 500);
-    platforms[2].setPosition(1500, 500);
+    platforms[0].setPosition(2000, 700);
 
     Timer::resetMainTime();
 }
@@ -74,6 +70,17 @@ void PlayState::handleControls() {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         if(hero->getPosition().y + hero->getGlobalBounds().height >= groundLevel-1)
             hero->jump();
+        else {
+            float toe = hero->getPosition().y + hero->getGlobalBounds().height;
+            float left = hero->getPosition().x;
+            float right= left + hero->getGlobalBounds().width;
+            for(const auto &i : platforms){
+                if(((i.left <= left && left <= i.right) || (i.left <= right && right <= i.right)) && (i.top <= toe && toe <= i.top + i.height) && (hero->getSpeed().y >= 0)){
+                    hero->jump();
+                    break;
+                }
+            }
+        }
     }
     if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         auto bullet = hero->shoot(Timer::getMainTime());
@@ -179,11 +186,12 @@ void PlayState::fixHeight() {
         hero->setSpeed(newSpeed);
     }
     for(const auto &i : platforms){
-        if(((i.left <= left && i.right >= left) || (i.left <= right && i.right >= right)) && i.top < toe <= i.top+10){
-            hero->move(sf::Vector2f(0,(i.top - toe)));
+        if(((i.left <= left && left <= i.right) || (i.left <= right && right <= i.right)) && (i.top <= toe && toe <= i.top + i.height) && (hero->getSpeed().y >= 0)){
+            hero->setPosition(sf::Vector2f(left,(i.top - hero->getGlobalBounds().height)));
             sf::Vector2f newSpeed(hero->getSpeed().x, 0);
-            // TODO nemici
+            hero->setSpeed(newSpeed);
         }
+            // TODO nemici
 
 
 

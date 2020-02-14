@@ -4,8 +4,8 @@
 
 #include "Platform.h"
 
-Platform::Platform(): sf::Sprite(*AssetManager::platformTexture),left(0),right(100),top(0) {
-    setTextureRect(sf::IntRect(0,0,100,100));
+Platform::Platform(): sf::Sprite(*AssetManager::platformTexture), left(0), right(width), top(0) {
+    setTextureRect(sf::IntRect(0,0,width,height));
 
 
 }
@@ -13,6 +13,6 @@ Platform::Platform(): sf::Sprite(*AssetManager::platformTexture),left(0),right(1
 void Platform::setPosition(float x, float y) {
     Transformable::setPosition(x, y);
     left = x;
-    right = left + 100;
+    right = left + width;
     top = y;
 }
