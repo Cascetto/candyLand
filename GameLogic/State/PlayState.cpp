@@ -24,8 +24,16 @@ PlayState::PlayState(TargetWindow targetWindow) : GameState(std::move(targetWind
     hero->scale(3, 3);
 
 
+    enemies.emplace_back(new Boss(gravity,0,0));
+    enemies[0]->scale(0.5,0.5);
+    enemies[0]->setPosition(2000,0);
+
     platforms.emplace_back(Platform());
     platforms[0].setPosition(2000, 600);
+
+    candies.emplace_back(Candy());
+    candies[0].scale(0.1,0.1);
+    candies[0].setPosition(1000,800);
 
     Timer::resetMainTime();
 }
@@ -116,6 +124,7 @@ void PlayState::drawFrame() {
     for(const auto& e : enemies) targetWindow->draw(*e);
     for(const auto& bullet : bullets) targetWindow->draw(*bullet);
     for(const auto& platform : platforms) targetWindow->draw(platform);
+    for(const auto& candy : candies) targetWindow->draw(candy);
 
 
 }
@@ -134,6 +143,13 @@ void PlayState::update() {
     for (auto const& enemy : enemies) {
         enemy->action(heroPos);
         //enemy->fixHeight(groundLevel);
+    }
+    auto heroRect = hero->getGlobalBounds();
+    for (auto candy : candies){
+        if(candy.getGlobalBounds().intersects(heroRect)) {
+            std::cout << "Preso!\n";
+            hero->powerUp();
+        }
     }
 }
 

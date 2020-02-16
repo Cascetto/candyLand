@@ -8,7 +8,7 @@
 #include "../../GameLogic/AssetManager.h"
 #include "../GameCharacter.h"
 
-class Watcher : public GameCharacter {
+class Watcher : virtual public GameCharacter {
 public:
     Watcher(float range, float g);
     void animate() override;

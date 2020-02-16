@@ -23,6 +23,7 @@ public:
     void update() override;
     std::shared_ptr<Bullet> shoot(float time);
     void action(sf::Vector2f heroPos) override;
+    void powerUp();
 
 private:
     float rof = 1.f / 2;

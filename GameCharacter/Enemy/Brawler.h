@@ -8,7 +8,7 @@
 #include "../../GameLogic/AssetManager.h"
 #include "../GameCharacter.h"
 
-class Brawler : public GameCharacter {
+class Brawler :  virtual public GameCharacter {
 public:
     Brawler(float speed, float g);
     void animate() override;

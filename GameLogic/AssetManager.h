@@ -20,6 +20,8 @@ public:
     static std::unique_ptr<sf::Texture> archerTexture;
     static std::unique_ptr<sf::Texture> coconutTexture;
     static std::unique_ptr<sf::Texture> platformTexture;
+    static std::unique_ptr<sf::Texture> bossTexture;
+    static std::unique_ptr<sf::Texture> candyTexture;
 
 
 };

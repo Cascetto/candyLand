@@ -10,7 +10,7 @@
 #include "SFML/Graphics.hpp"
 #include "../GameLogic/Observer.h"
 
-class GameCharacter : public sf::Sprite, public Observer {
+class GameCharacter :   public sf::Sprite,  public Observer {
 public:
     void fixHeight(float groundLevel);
     virtual void move(sf::Vector2f direction);
