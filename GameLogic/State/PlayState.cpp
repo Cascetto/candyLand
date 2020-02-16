@@ -23,10 +23,6 @@ PlayState::PlayState(TargetWindow targetWindow) : GameState(std::move(targetWind
     hero->setPosition(200, 200);
     hero->scale(3, 3);
 
-
-    platforms.emplace_back(Platform());
-    platforms[0].setPosition(2000, 600);
-
     Timer::resetMainTime();
 }
 
@@ -201,6 +197,47 @@ void PlayState::fixHeight() {
     }
 }
 
+void PlayState::generate(float startPoint) {
+    //caso 1: brawler (spazio 500 - 50 * (level - 1)) % 20
+    //caso 2: platform (spazio 624 - 50 * (level-1)) % 20
+    //caso 3: platform + archer (spazio 624 - 50 * (level-1)) % 20
+    //caso 4: stalker (spazio 500 - 40 * (level - 1)) % 20
+    //caso 5: boss (spazio 1000 - 100 * (level - 1)) % 5
+    //caso 6: caramella (spazio 50) % 15
+    float endPoint = startPoint + targetWindow->getView().getSize().x;
+    while (startPoint < endPoint) {
+        int generateCase = (rand() % 6) + 1;
+            GameCharacter* enemy;
+        if(generateCase  == 1) {
+            enemy = GameFactory::makeBrawlewr(gravity);
+            enemy->setPosition(startPoint, groundLevel - enemy->getGlobalBounds().height);
+            startPoint += 500 - 50 * (level - 1);
+        } else if(generateCase  == 2) {
+            auto platform = GameFactory::makePlatform();
+            platform->setPosition(startPoint, 700);
+            platforms.emplace_back(*platform);
+            startPoint += 500 - 50 * (level - 1);
+        } else if(generateCase  == 3) {
+            auto platform = GameFactory::makePlatform();
+            platform->setPosition(startPoint, 700);
+            platforms.emplace_back(*platform);
+            enemy = GameFactory::makeArcher(gravity);
+            enemy->setPosition(startPoint, 700 - enemy->getGlobalBounds().height);
 
+            startPoint += 500 - 50 * (level - 1);
+        } else if(generateCase  == 4) {
+            enemy = GameFactory::makeWatcher(gravity);
+            enemy->setPosition(startPoint, groundLevel - enemy->getGlobalBounds().height);
+            startPoint += 500 - 40 * level;
+        } else if(generateCase  == 5) {
 
+        } else if(generateCase  == 6) {
+
+        } else {
+
+        }
+        //todo finisci
+    }
+
+}
 

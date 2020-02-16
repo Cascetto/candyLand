@@ -10,10 +10,17 @@
 #include "../GameCharacter/Enemy/Brawler.h"
 #include "../GameCharacter/Enemy/Watcher.h"
 #include "../GameCharacter/Enemy/Archer.h"
+#include "../GameObjects/Platform.h"
+
 class GameFactory {
 public:
     static std::shared_ptr<Bullet> makeBullet(sf::Vector2f direction, bool friendly = false);
     static GameCharacter* makeEnemy(float gravity);
+    static GameCharacter* makeWatcher(float gravity);
+    static GameCharacter* makeArcher(float gravity);
+    static GameCharacter* makeBrawlewr(float gravity);
+    static GameCharacter* makeBoss(float gravity);
+    static Platform* makePlatform();
 };
 
 

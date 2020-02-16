@@ -15,3 +15,29 @@ GameCharacter* GameFactory::makeEnemy(float gravity) {
     enemy->setPosition(1500, 400);
     return enemy;
 }
+
+GameCharacter* GameFactory::makeBrawlewr(float gravity) {
+    auto enemy = new Brawler(300, gravity);
+    //todo set speed
+    return enemy;
+}
+
+GameCharacter* GameFactory::makeArcher(float gravity) {
+    auto enemy = new Archer(gravity);
+    return enemy;
+}
+
+GameCharacter* GameFactory::makeBoss(float gravity) {
+    //todo add boss
+}
+
+GameCharacter* GameFactory::makeWatcher(float gravity) {
+    //todo range logic
+    auto enemy = new Watcher(1000, gravity);
+    return enemy;
+}
+
+Platform * GameFactory::makePlatform() {
+    auto platform = new Platform();
+    return platform;
+}
