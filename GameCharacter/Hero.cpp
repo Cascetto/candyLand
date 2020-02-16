@@ -40,3 +40,8 @@ std::shared_ptr<Bullet> Hero::shoot(float time) {
 void Hero::action(sf::Vector2f heroPos) {
 
 }
+
+void Hero::powerUp() {
+    if(rof >= 0.2)
+        rof -= 0.01;
+}

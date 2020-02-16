@@ -131,6 +131,13 @@ void PlayState::update() {
         enemy->action(heroPos);
         //enemy->fixHeight(groundLevel);
     }
+    auto heroRect = hero->getGlobalBounds();
+    for (auto candy : candies){
+        if(candy.getGlobalBounds().intersects(heroRect)) {
+            std::cout << "Preso!\n";
+            hero->powerUp();
+        }
+    }
 }
 
 bool PlayState::detectCollision(std::shared_ptr<Bullet> &bullet) {
@@ -231,13 +238,5 @@ void PlayState::generate(float startPoint) {
             startPoint += 500 - 40 * level;
         } else if(generateCase  == 5) {
 
-        } else if(generateCase  == 6) {
 
-        } else {
-
-        }
-        //todo finisci
-    }
-
-}
 

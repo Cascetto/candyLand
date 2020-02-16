@@ -9,7 +9,7 @@
 #include "../GameCharacter.h"
 #include "../../GameObjects/Bullet.h"
 
-class Archer : public GameCharacter {
+class Archer :  virtual public GameCharacter {
 
 public:
     Archer(float gravity);
