@@ -33,7 +33,7 @@ public:
 
 
 private:
-    short int level;
+    short int level {1};
     bool detectCollision(std::shared_ptr<Bullet>& bullet);
     void moveView();
 

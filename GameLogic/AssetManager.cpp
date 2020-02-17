@@ -24,6 +24,7 @@ void AssetManager::load() {
         brawlerTexture = std::make_unique<sf::Texture>();
         coconutTexture = std::make_unique<sf::Texture>();
         platformTexture = std::make_unique<sf::Texture>();
+        archerTexture = std::make_unique<sf::Texture>();
         bossTexture = std::make_unique<sf::Texture>();
         candyTexture = std::make_unique<sf::Texture>();
 
@@ -33,10 +34,10 @@ void AssetManager::load() {
         heroTexture->loadFromFile("../Assets/Images/isAnimatedFull.png");
         watcherTexture->loadFromFile("../Assets/Images/dino_idle_original.png");
         brawlerTexture->loadFromFile("../Assets/Images/lanter_walk_original.png");
-        //archerTexture->loadFromFile("../Assets/Images/archer.png");
+        archerTexture->loadFromFile("../Assets/Images/archer.png");
         coconutTexture->loadFromFile("../Assets/Images/coconut.png");
         platformTexture->loadFromFile( "../Assets/Images/platform.png");
-        bossTexture->loadFromFile("../Assets/Images/Boss.png");
+        bossTexture->loadFromFile("../Assets/Images/lolly.png");
         candyTexture->loadFromFile("../Assets/Images/lolly.png");
 
     } catch (const std::exception& exception) {

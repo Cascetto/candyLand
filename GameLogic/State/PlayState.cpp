@@ -14,8 +14,10 @@ PlayState::PlayState(TargetWindow targetWindow) : GameState(std::move(targetWind
     background[0].scale(scale, scale);
     background[1].scale(scale, scale);
     background[1].setPosition(background[0].getGlobalBounds().width, 0);
-
     groundLevel = (7.98f / 11.85f) * background[0].getGlobalBounds().height;
+    generate(background[0].getPosition().x);
+    generate(background[1].getPosition().x);
+
 
     PlayState::gravity = (this->targetWindow->getView().getSize().y) / 4.5f;
 
@@ -99,6 +101,7 @@ void PlayState::moveView() {
         float pos = i.getPosition().x;
         if (pos + i.getGlobalBounds().width < temp.getCenter().x - temp.getSize().x / 2) {
             i.move(2 * i.getGlobalBounds().width, 0);
+            generate(i.getPosition().x);
         }
     }
     targetWindow->setView(temp);
@@ -213,18 +216,19 @@ void PlayState::generate(float startPoint) {
     //caso 6: caramella (spazio 50) % 15
     float endPoint = startPoint + targetWindow->getView().getSize().x;
     while (startPoint < endPoint) {
-        int generateCase = (rand() % 6) + 1;
-            GameCharacter* enemy;
-        if(generateCase  == 1) {
+        //int generateCase = (rand() % 6) + 1;
+        int generateCase = 1;
+        GameCharacter *enemy;
+        if (generateCase == 1) {
             enemy = GameFactory::makeBrawlewr(gravity);
             enemy->setPosition(startPoint, groundLevel - enemy->getGlobalBounds().height);
             startPoint += 500 - 50 * (level - 1);
-        } else if(generateCase  == 2) {
+        } else if (generateCase == 2) {
             auto platform = GameFactory::makePlatform();
             platform->setPosition(startPoint, 700);
             platforms.emplace_back(*platform);
             startPoint += 500 - 50 * (level - 1);
-        } else if(generateCase  == 3) {
+        } else if (generateCase == 3) {
             auto platform = GameFactory::makePlatform();
             platform->setPosition(startPoint, 700);
             platforms.emplace_back(*platform);
@@ -232,11 +236,17 @@ void PlayState::generate(float startPoint) {
             enemy->setPosition(startPoint, 700 - enemy->getGlobalBounds().height);
 
             startPoint += 500 - 50 * (level - 1);
-        } else if(generateCase  == 4) {
+        } else if (generateCase == 4) {
             enemy = GameFactory::makeWatcher(gravity);
             enemy->setPosition(startPoint, groundLevel - enemy->getGlobalBounds().height);
             startPoint += 500 - 40 * level;
-        } else if(generateCase  == 5) {
-
-
+        } else if (generateCase == 5) {
+            enemy = GameFactory::makeBoss(gravity);
+            enemy->setPosition(startPoint, groundLevel - enemy->getGlobalBounds().height);
+            startPoint += 1000 - 100 * (level - 1);
+        }
+        if (enemy != nullptr)
+            enemies.emplace_back(enemy);
+    }
+}
 
