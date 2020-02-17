@@ -17,7 +17,8 @@ GameCharacter* GameFactory::makeEnemy(float gravity) {
 }
 
 GameCharacter* GameFactory::makeBrawlewr(float gravity) {
-    auto enemy = new Brawler(300, gravity);
+    auto enemy = new Brawler(3, gravity);
+    enemy->scale(0.3f, 0.3f);
     //todo set speed
     return enemy;
 }

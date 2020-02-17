@@ -217,7 +217,7 @@ void PlayState::generate(float startPoint) {
     float endPoint = startPoint + targetWindow->getView().getSize().x;
     while (startPoint < endPoint) {
         //int generateCase = (rand() % 6) + 1;
-        int generateCase = 1;
+        int generateCase = 5;
         GameCharacter *enemy;
         if (generateCase == 1) {
             enemy = GameFactory::makeBrawlewr(gravity);

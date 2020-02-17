@@ -16,9 +16,6 @@ public:
     void animate() override;
     void update() override;
     void action(sf::Vector2f heroPos) override;
-
-private:
-    static std::shared_ptr<std::vector<std::shared_ptr<Bullet>>> bullets;
 };
 
 
