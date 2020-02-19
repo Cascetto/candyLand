@@ -22,6 +22,7 @@ private:
 
     float range;
     unsigned short int alpha {255};
+    std::vector<sf::IntRect> frame;
 
 };
 

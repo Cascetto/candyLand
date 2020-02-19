@@ -35,6 +35,7 @@ GameCharacter* GameFactory::makeBoss(float gravity) {
 GameCharacter* GameFactory::makeWatcher(float gravity) {
     //todo range logic
     auto enemy = new Watcher(1000, gravity);
+    enemy->scale(0.6f,0.6f);
     return enemy;
 }
 

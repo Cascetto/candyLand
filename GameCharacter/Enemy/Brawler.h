@@ -14,6 +14,8 @@ public:
     void animate() override;
     void update() override;
     void action(sf::Vector2f heroPos) override;
+private:
+    std::vector<sf::IntRect> frame;
 
 };
 
