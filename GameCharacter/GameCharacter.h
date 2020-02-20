@@ -26,10 +26,10 @@ protected:
 public:
     const sf::Vector2f &getSpeed() const;
 
-    void setSpeed(const sf::Vector2f &speed);
-
-protected:
     virtual void animate() = 0;
+
+    void setSpeed(const sf::Vector2f &speed);
+protected:
     int frameCounter {0};
 
 private:

@@ -32,12 +32,12 @@ void AssetManager::load() {
 
         backgroundTexture->loadFromFile("../Assets/Images/Background.png");
         heroTexture->loadFromFile("../Assets/Images/isAnimatedFull.png");
-        watcherTexture->loadFromFile("../Assets/Images/dino_idle_original.png");
-        brawlerTexture->loadFromFile("../Assets/Images/lanter_walk_original.png");
-        archerTexture->loadFromFile("../Assets/Images/archer.png");
+        watcherTexture->loadFromFile("../Assets/Images/spritesheet-2.png");
+        brawlerTexture->loadFromFile("../Assets/Images/LANTERN.png");
+        archerTexture->loadFromFile("../Assets/Images/ALIEN.png");
         coconutTexture->loadFromFile("../Assets/Images/coconut.png");
         platformTexture->loadFromFile( "../Assets/Images/platform.png");
-        bossTexture->loadFromFile("../Assets/Images/lolly.png");
+        bossTexture->loadFromFile("../Assets/Images/BOSS.png");
         candyTexture->loadFromFile("../Assets/Images/lolly.png");
 
     } catch (const std::exception& exception) {

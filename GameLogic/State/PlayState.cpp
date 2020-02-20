@@ -133,6 +133,7 @@ void PlayState::update() {
     for (auto const& enemy : enemies) {
         auto bullet = enemy->action(heroPos);
         if(bullet != nullptr) bullets.emplace_back(bullet);
+        enemy->animate();
         //enemy->fixHeight(groundLevel);
     }
     auto heroRect = hero->getGlobalBounds();

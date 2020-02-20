@@ -16,6 +16,8 @@ public:
     std::shared_ptr<Bullet> action(sf::Vector2f heropos) override;
     void update() override;
     void animate() override;
+private:
+    std::vector<sf::IntRect> frame;
 };
 
 
