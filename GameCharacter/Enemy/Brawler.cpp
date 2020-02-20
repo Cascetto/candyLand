@@ -16,8 +16,9 @@ Brawler::Brawler(float speed, float g) : GameCharacter(speed, *AssetManager::bra
     setTextureRect(sf::IntRect(0, 0,579 ,763 ));
 }
 
-void Brawler::action(sf::Vector2f heroPos) {
+std::shared_ptr<Bullet> Brawler::action(sf::Vector2f heroPos) {
     auto direction = heroPos - getPosition();
     direction = direction /= sqrt(direction.x * direction.x + direction.y * direction.y);
     move(sf::Vector2f(direction.x * speed.x, 0));
+    return nullptr;
 }

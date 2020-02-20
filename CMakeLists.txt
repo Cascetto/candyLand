@@ -30,7 +30,11 @@ set(SOURCE_FILES
         GameCharacter/Enemy/Watcher.cpp
         GameCharacter/Enemy/Brawler.cpp
         GameCharacter/Enemy/Archer.cpp
-        GameCharacter/Enemy/Boss.cpp GameCharacter/Enemy/Boss.h GameObjects/Candy.cpp GameObjects/Candy.h)
+        GameCharacter/Enemy/Boss.cpp
+        GameObjects/Candy.cpp
+        )
+
+add_subdirectory(unit_testing)
 
 link_directories(./sfml/lib)
 link_libraries(libsfml-audio.2.5.1.dylib

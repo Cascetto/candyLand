@@ -9,14 +9,15 @@
 #include <cmath>
 #include "SFML/Graphics.hpp"
 #include "../GameLogic/Observer.h"
+#include "../GameObjects/Bullet.h"
 
-class GameCharacter :   public sf::Sprite,  public Observer {
+class GameCharacter : public sf::Sprite, public Observer {
 public:
     void fixHeight(float groundLevel);
     virtual void move(sf::Vector2f direction);
     int revert{0};
     bool takeDamage();
-    virtual void action(sf::Vector2f heroPos) = 0;
+    virtual std::shared_ptr<Bullet> action(sf::Vector2f heroPos) = 0;
 
 protected:
     GameCharacter(float speed, sf::Texture& texture, float g);

@@ -22,7 +22,7 @@ public:
     void animate() override;
     void update() override;
     std::shared_ptr<Bullet> shoot(float time);
-    void action(sf::Vector2f heroPos) override;
+    std::shared_ptr<Bullet> action(sf::Vector2f heroPos) override;
     void powerUp();
 
 private:

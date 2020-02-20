@@ -10,8 +10,11 @@ Boss::Boss(float gravity, float range, float speed):  GameCharacter(speed, *Asse
 
 }
 
-void Boss::action(sf::Vector2f heropos) {
+std::shared_ptr<Bullet> Boss::action(sf::Vector2f heropos) {
     Watcher::action(heropos);
+    Brawler::action(heropos);
+    return Archer::action(heropos);
+
 }
 
 void Boss::update() {

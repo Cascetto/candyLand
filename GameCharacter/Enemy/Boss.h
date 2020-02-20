@@ -13,7 +13,7 @@
 class Boss :  public Brawler,  public Archer, public Watcher  {
 public:
     Boss(float gravity, float range, float speed);
-    void action(sf::Vector2f heropos) override;
+    std::shared_ptr<Bullet> action(sf::Vector2f heropos) override;
     void update() override;
     void animate() override;
 };

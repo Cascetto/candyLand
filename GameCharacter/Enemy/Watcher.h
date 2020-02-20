@@ -13,7 +13,7 @@ public:
     Watcher(float range, float g);
     void animate() override;
     void update() override;
-    void action(sf::Vector2f heroPos) override;
+    std::shared_ptr<Bullet> action(sf::Vector2f heroPos) override;
     void updateRange(float range);
     void fadeOut();
     void fadeIn();

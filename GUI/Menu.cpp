@@ -4,7 +4,7 @@
 
 #include "Menu.h"
 
-MenuItem::MenuItem(MenuItem::TYPE type) : type(type){
+Menu::MenuItem::MenuItem(Menu::MenuItem::TYPE type) : type(type){
     std::string btnText;
     switch (type) {
         case MenuItem::TYPE::START:
@@ -36,7 +36,7 @@ MenuItem::MenuItem(MenuItem::TYPE type) : type(type){
     setString(btnText);
 }
 
-const MenuItem::TYPE& MenuItem::getType() const {
+const Menu::MenuItem::TYPE& Menu::MenuItem::getType() const {
     return type;
 }
 
@@ -134,6 +134,6 @@ void Menu::backward() {
 const Menu::STYLE& Menu::getStyle() const {
     return style;
 }
-const MenuItem::TYPE& Menu::getAction() const {
+const Menu::MenuItem::TYPE& Menu::getAction() const {
     return itemList[active]->getType();
 }

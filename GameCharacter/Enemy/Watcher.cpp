@@ -16,13 +16,14 @@ void Watcher::update() {
 
 }
 
-void Watcher::action(sf::Vector2f heroPos) {
+std::shared_ptr<Bullet> Watcher::action(sf::Vector2f heroPos) {
     float distance = abs(heroPos.x - getPosition().x);
     if(distance <= range)
         fadeIn();
     else
         fadeOut();
     move(sf::Vector2f(0, 1));
+    return nullptr;
 }
 
 void Watcher::updateRange(float range) {

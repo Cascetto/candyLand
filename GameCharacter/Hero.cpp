@@ -37,8 +37,8 @@ std::shared_ptr<Bullet> Hero::shoot(float time) {
     return bullet;
 }
 
-void Hero::action(sf::Vector2f heroPos) {
-
+std::shared_ptr<Bullet> Hero::action(sf::Vector2f heroPos) {
+    return nullptr;
 }
 
 void Hero::powerUp() {

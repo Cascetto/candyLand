@@ -29,7 +29,8 @@ GameCharacter* GameFactory::makeArcher(float gravity) {
 }
 
 GameCharacter* GameFactory::makeBoss(float gravity) {
-    //todo add boss
+    auto enemy = new Boss(gravity, 500, 2);
+    return enemy;
 }
 
 GameCharacter* GameFactory::makeWatcher(float gravity) {

@@ -10,30 +10,28 @@
 
 #include "SFML/Graphics.hpp"
 
-class MenuItem : public sf::Text {
-public:
-    enum TYPE {
-        START,
-        RECORD,
-        EXIT,
-        RESUME,
-        QUIT,
-        SCORE,
-        INFO,
-        NONE
-    };
-    explicit MenuItem(MenuItem::TYPE type);
-    const TYPE& getType() const;
-
-private:
-    TYPE type;
-};
-
-
-
 
 class Menu {
 public:
+    class MenuItem : public sf::Text {
+    public:
+        enum TYPE {
+            START,
+            RECORD,
+            EXIT,
+            RESUME,
+            QUIT,
+            SCORE,
+            INFO,
+            NONE
+        };
+        explicit MenuItem(MenuItem::TYPE type);
+        const TYPE& getType() const;
+
+    private:
+        TYPE type;
+    };
+
     enum STYLE {
         CENTERED,
         TOP,

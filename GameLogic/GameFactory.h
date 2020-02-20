@@ -11,6 +11,8 @@
 #include "../GameCharacter/Enemy/Watcher.h"
 #include "../GameCharacter/Enemy/Archer.h"
 #include "../GameObjects/Platform.h"
+#include "../GameCharacter/Enemy/Boss.h"
+
 
 class GameFactory {
 public:

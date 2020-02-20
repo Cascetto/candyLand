@@ -10,12 +10,14 @@
 #include "../../GameObjects/Bullet.h"
 
 class Archer :  virtual public GameCharacter {
-
+private:
+    const float rof{1.f / 4};
+    float lastTime;
 public:
     Archer(float gravity);
     void animate() override;
     void update() override;
-    void action(sf::Vector2f heroPos) override;
+    std::shared_ptr<Bullet> action(sf::Vector2f heroPos) override;
 };
 
 

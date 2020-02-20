@@ -24,13 +24,13 @@ void MenuState::handleSincInput() {
                 menu.forward();
             if(event.key.code == sf::Keyboard::Enter) {
                 switch (menu.getAction()) {
-                    case MenuItem::TYPE::START:
+                    case Menu::MenuItem::TYPE::START:
                         GameEngine::getGameEngine()->getStateHandler().addState(std::make_shared<PlayState>(targetWindow));
                         break;
-                    case MenuItem::TYPE::RECORD:
+                    case Menu::MenuItem::TYPE::RECORD:
                         GameEngine::getGameEngine()->getStateHandler().addState(std::make_shared<RecordState>(targetWindow));
                         break;
-                    case MenuItem::TYPE::EXIT:
+                    case Menu::MenuItem::TYPE::EXIT:
                         targetWindow->close();
                         break;
                     default:
