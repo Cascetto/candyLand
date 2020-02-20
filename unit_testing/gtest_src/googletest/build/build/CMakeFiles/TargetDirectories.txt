@@ -1,0 +1,4 @@
+/Users/manu/CLionProjects/googletest/googletest/googletest/googletest/build/build/CMakeFiles/rebuild_cache.dir
+/Users/manu/CLionProjects/googletest/googletest/googletest/googletest/build/build/CMakeFiles/edit_cache.dir
+/Users/manu/CLionProjects/googletest/googletest/googletest/googletest/build/build/CMakeFiles/gtest_main.dir
+/Users/manu/CLionProjects/googletest/googletest/googletest/googletest/build/build/CMakeFiles/gtest.dir

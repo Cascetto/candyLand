@@ -2,7 +2,6 @@
 // Created by Emanuele Casciaro on 30/12/2019.
 //
 
-#include <tclDecls.h>
 #include "Archer.h"
 
 
