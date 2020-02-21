@@ -5,8 +5,8 @@
 #include "Boss.h"
 
 Boss::Boss(float gravity, float range, float speed):  GameCharacter(speed, *AssetManager::bossTexture, gravity),Archer(gravity), Brawler(speed,gravity), Watcher(range,gravity){
-    for (int i = 0; i < 20; i++) {
-        frame.emplace_back(sf::IntRect(584 * i ,0,584,587));
+    for (int i = 0; i < 14; i++) {
+        frame.emplace_back(sf::IntRect(835 * i ,0,835,587));
     }
 }
 
@@ -23,6 +23,6 @@ void Boss::update() {
 
 void Boss::animate() {
     Watcher::animate();
-    setTextureRect(frame[((frameCounter++) % 10) + revert * 10]);
-    if(frameCounter >= 100) frameCounter = 0;
+    setTextureRect(frame[((frameCounter++) % 7) + revert * 7]);
+    if(frameCounter >= 140) frameCounter = 0;
 }
