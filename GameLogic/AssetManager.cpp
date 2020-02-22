@@ -32,9 +32,9 @@ void AssetManager::load() {
 
         backgroundTexture->loadFromFile("../Assets/Images/Background.png");
         heroTexture->loadFromFile("../Assets/Images/isAnimatedFull.png");
-        watcherTexture->loadFromFile("../Assets/Images/spritesheet-2.png");
+        watcherTexture->loadFromFile("../Assets/Images/dinoWalk.png");
         brawlerTexture->loadFromFile("../Assets/Images/LANTERN.png");
-        archerTexture->loadFromFile("../Assets/Images/ALIEN.png");
+        archerTexture->loadFromFile("../Assets/Images/archer.png");
         coconutTexture->loadFromFile("../Assets/Images/coconut.png");
         platformTexture->loadFromFile( "../Assets/Images/platform.png");
         bossTexture->loadFromFile("../Assets/Images/BOSS.png");

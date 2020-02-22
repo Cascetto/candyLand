@@ -5,9 +5,9 @@
 #include "Watcher.h"
 
 Watcher::Watcher(float range, float g) : GameCharacter(0, *AssetManager::watcherTexture, g), range(range) {
-    setTextureRect(sf::IntRect(0, 0, 690, 472));
+    setTextureRect(sf::IntRect(0, 0, 680, 472));
     for (int i = 0; i < 20; i++)
-        frame.emplace_back(sf::IntRect(690 * i,0,690,430));
+        frame.emplace_back(sf::IntRect(680 * i,0,680,430));
 
 }
 

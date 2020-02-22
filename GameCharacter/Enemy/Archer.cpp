@@ -9,12 +9,11 @@ Archer::Archer(float gravity) : GameCharacter(0, *AssetManager::archerTexture, g
     for (int i = 0; i < 20; i++) {
         frame.emplace_back(sf::IntRect(240 * i ,0,240,439));
     }
-
-
+    setTextureRect(sf::IntRect(0, 0, 80, 94));
 }
 
 void Archer::animate() {
-    setTextureRect(frame[((frameCounter++) % 5) + revert * 5]);
+    //setTextureRect(frame[((frameCounter++) % 5) + revert * 5]);
     if(frameCounter >= 50) frameCounter = 0;
 
 }
@@ -30,8 +29,8 @@ std::shared_ptr<Bullet> Archer::action(sf::Vector2f heroPos) {
         direction.x = -1;
     } else
         revert = 1;
-
     auto bullet = std::make_shared<Bullet>(direction, 50);
     bullet->setPosition(getPosition());
+    return nullptr;
     return bullet;
 }

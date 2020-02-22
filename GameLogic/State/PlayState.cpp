@@ -15,8 +15,8 @@ PlayState::PlayState(TargetWindow targetWindow) : GameState(std::move(targetWind
     background[1].scale(scale, scale);
     background[1].setPosition(background[0].getGlobalBounds().width, 0);
     groundLevel = (7.98f / 11.85f) * background[0].getGlobalBounds().height;
-    generate(background[0].getPosition().x);
-    generate(background[1].getPosition().x);
+    generate(background[0].getPosition().x, background[0].getPosition().x + background[0].getGlobalBounds().width);
+    generate(background[1].getPosition().x, background[1].getPosition().x + background[1].getGlobalBounds().width);
 
 
     PlayState::gravity = (this->targetWindow->getView().getSize().y) / 4.5f;
@@ -101,7 +101,7 @@ void PlayState::moveView() {
         float pos = i.getPosition().x;
         if (pos + i.getGlobalBounds().width < temp.getCenter().x - temp.getSize().x / 2) {
             i.move(2 * i.getGlobalBounds().width, 0);
-            generate(i.getPosition().x);
+            generate(i.getPosition().x, i.getPosition().x + i.getGlobalBounds().width);
         }
     }
     targetWindow->setView(temp);
@@ -111,10 +111,11 @@ void PlayState::drawFrame() {
     update();
     targetWindow->clear(sf::Color::Black);
     for(const auto& b : background) targetWindow->draw(b);
-    targetWindow->draw(*hero);
-    for(const auto& e : enemies) targetWindow->draw(*e);
-    for(const auto& bullet : bullets) targetWindow->draw(*bullet);
     for(const auto& platform : platforms) targetWindow->draw(platform);
+    for(const auto& bullet : bullets) targetWindow->draw(*bullet);
+    for(const auto& e : enemies) targetWindow->draw(*e);
+    for(const auto& c : candies) targetWindow->draw(*c);
+    targetWindow->draw(*hero);
 
 
 }
@@ -130,15 +131,21 @@ void PlayState::update() {
             bullets.erase(bullets.begin() + i);
         }
     }
+    /*
     for (auto const& enemy : enemies) {
         auto bullet = enemy->action(heroPos);
-        if(bullet != nullptr) bullets.emplace_back(bullet);
-        enemy->animate();
+        auto bottomRigth = enemy->getPosition();
+        bottomRigth.x = enemy->getGlobalBounds().width;
+        bottomRigth.y = enemy->getGlobalBounds().height;
+        if(!isOutside(bottomRigth))
+            if(bullet != nullptr) bullets.emplace_back(bullet);
+                enemy->animate();
         //enemy->fixHeight(groundLevel);
     }
+     */
     auto heroRect = hero->getGlobalBounds();
-    for (auto candy : candies){
-        if(candy.getGlobalBounds().intersects(heroRect)) {
+    for (auto candy : candies) {
+        if(candy->getGlobalBounds().intersects(heroRect)) {
             std::cout << "Preso!\n";
             hero->powerUp();
         }
@@ -209,46 +216,69 @@ void PlayState::fixHeight() {
     }
 }
 
-void PlayState::generate(float startPoint) {
+void PlayState::generate(float startPoint, float endPoint) {
     //caso 1: brawler (spazio 500 - 50 * (level - 1)) % 20
     //caso 2: platform (spazio 624 - 50 * (level-1)) % 20
     //caso 3: platform + archer (spazio 624 - 50 * (level-1)) % 20
     //caso 4: stalker (spazio 500 - 40 * (level - 1)) % 20
     //caso 5: boss (spazio 1000 - 100 * (level - 1)) % 5
     //caso 6: caramella (spazio 50) % 15
-    float endPoint = startPoint + targetWindow->getView().getSize().x;
+    int prevCase = -1;
+    startPoint += 1000;
+    endPoint += 1000;
     while (startPoint < endPoint) {
-        //int generateCase = (rand() % 6) + 1;
-        int generateCase = 5;
-        GameCharacter *enemy;
-        if (generateCase == 1) {
+        int generateCase = (rand() % 100) + 1;
+        int offset = (rand() % 201) + 600;
+        GameCharacter *enemy = nullptr;
+        if ((generateCase <= 20) && prevCase != 1) {
             enemy = GameFactory::makeBrawlewr(gravity);
             enemy->setPosition(startPoint, groundLevel - enemy->getGlobalBounds().height);
             startPoint += 500 - 50 * (level - 1);
-        } else if (generateCase == 2) {
+            prevCase = 1;
+        } else if ((generateCase > 20 && generateCase <= 40) && prevCase != 2  && prevCase != 3) {
             auto platform = GameFactory::makePlatform();
-            platform->setPosition(startPoint, 700);
+            platform->setPosition(startPoint, offset);
             platforms.emplace_back(*platform);
             startPoint += 500 - 50 * (level - 1);
-        } else if (generateCase == 3) {
+            prevCase = 2;
+        } else if ((generateCase > 40 && generateCase <= 60) && prevCase != 2 && prevCase != 3) {
             auto platform = GameFactory::makePlatform();
-            platform->setPosition(startPoint, 700);
+            platform->setPosition(startPoint, offset);
             platforms.emplace_back(*platform);
             enemy = GameFactory::makeArcher(gravity);
-            enemy->setPosition(startPoint, 700 - enemy->getGlobalBounds().height);
-
+            enemy->setPosition(startPoint, offset - enemy->getGlobalBounds().height);
             startPoint += 500 - 50 * (level - 1);
-        } else if (generateCase == 4) {
+            prevCase = 3;
+        } else if ((generateCase > 60 && generateCase <= 80) && prevCase != 4) {
             enemy = GameFactory::makeWatcher(gravity);
             enemy->setPosition(startPoint, groundLevel - enemy->getGlobalBounds().height);
             startPoint += 500 - 40 * level;
-        } else if (generateCase == 5) {
+            prevCase = 4;
+        } else if (generateCase > 80 && generateCase <= 85 && !checkBoss()) {
             enemy = GameFactory::makeBoss(gravity);
             enemy->setPosition(startPoint, groundLevel - enemy->getGlobalBounds().height);
             startPoint += 1000 - 100 * (level - 1);
+            prevCase = 5;
+        } else if(generateCase > 85 && generateCase <= 100 && prevCase != 6) {
+            auto candy = GameFactory::makeCandy();
+            candy->setPosition(startPoint, groundLevel - candy->getGlobalBounds().height);
+            candies.emplace_back(candy);
+            prevCase = 6;
         }
         if (enemy != nullptr)
             enemies.emplace_back(enemy);
     }
 }
+
+bool PlayState::checkBoss() {
+    Boss* ptr;
+    for(auto i: enemies){
+        ptr = dynamic_cast<Boss*>(i);
+        if(ptr != nullptr)
+            return true;
+    }
+
+    return false;
+}
+
 

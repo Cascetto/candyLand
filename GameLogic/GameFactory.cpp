@@ -25,6 +25,7 @@ GameCharacter* GameFactory::makeBrawlewr(float gravity) {
 
 GameCharacter* GameFactory::makeArcher(float gravity) {
     auto enemy = new Archer(gravity);
+    enemy->scale(3, 3);
     return enemy;
 }
 
@@ -40,7 +41,13 @@ GameCharacter* GameFactory::makeWatcher(float gravity) {
     return enemy;
 }
 
-Platform * GameFactory::makePlatform() {
+Candy* GameFactory::makeCandy() {
+    auto candy = new Candy();
+    candy->scale(0.2, 0.2);
+    return candy;
+}
+
+Platform* GameFactory::makePlatform() {
     auto platform = new Platform();
     return platform;
 }
