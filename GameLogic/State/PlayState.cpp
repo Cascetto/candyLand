@@ -16,7 +16,7 @@ PlayState::PlayState(TargetWindow targetWindow) : GameState(std::move(targetWind
     background[1].setPosition(background[0].getGlobalBounds().width, 0);
     groundLevel = (7.98f / 11.85f) * background[0].getGlobalBounds().height;
     generate(background[0].getPosition().x, background[0].getPosition().x + background[0].getGlobalBounds().width);
-    generate(background[1].getPosition().x, background[0].getPosition().x + background[0].getGlobalBounds().width);
+    generate(background[1].getPosition().x, background[1].getPosition().x + background[1].getGlobalBounds().width);
 
 
     PlayState::gravity = (this->targetWindow->getView().getSize().y) / 4.5f;
@@ -131,6 +131,7 @@ void PlayState::update() {
             bullets.erase(bullets.begin() + i);
         }
     }
+    /*
     for (auto const& enemy : enemies) {
         auto bullet = enemy->action(heroPos);
         auto bottomRigth = enemy->getPosition();
@@ -141,8 +142,9 @@ void PlayState::update() {
                 enemy->animate();
         //enemy->fixHeight(groundLevel);
     }
+     */
     auto heroRect = hero->getGlobalBounds();
-    for (auto candy : candies){
+    for (auto candy : candies) {
         if(candy->getGlobalBounds().intersects(heroRect)) {
             std::cout << "Preso!\n";
             hero->powerUp();
@@ -252,14 +254,14 @@ void PlayState::generate(float startPoint, float endPoint) {
             enemy->setPosition(startPoint, groundLevel - enemy->getGlobalBounds().height);
             startPoint += 500 - 40 * level;
             prevCase = 4;
-        } else if (generateCase > 80 && generateCase <= 85 && prevCase != 5) {
+        } else if (generateCase > 80 && generateCase <= 85 && !checkBoss()) {
             enemy = GameFactory::makeBoss(gravity);
             enemy->setPosition(startPoint, groundLevel - enemy->getGlobalBounds().height);
             startPoint += 1000 - 100 * (level - 1);
             prevCase = 5;
         } else if(generateCase > 85 && generateCase <= 100 && prevCase != 6) {
             auto candy = GameFactory::makeCandy();
-            candy->setPosition(candy->getPosition().x, groundLevel - candy->getGlobalBounds().height);
+            candy->setPosition(startPoint, groundLevel - candy->getGlobalBounds().height);
             candies.emplace_back(candy);
             prevCase = 6;
         }
@@ -267,4 +269,16 @@ void PlayState::generate(float startPoint, float endPoint) {
             enemies.emplace_back(enemy);
     }
 }
+
+bool PlayState::checkBoss() {
+    Boss* ptr;
+    for(auto i: enemies){
+        ptr = dynamic_cast<Boss*>(i);
+        if(ptr != nullptr)
+            return true;
+    }
+
+    return false;
+}
+
 

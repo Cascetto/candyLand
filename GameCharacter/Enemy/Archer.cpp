@@ -29,7 +29,6 @@ std::shared_ptr<Bullet> Archer::action(sf::Vector2f heroPos) {
         direction.x = -1;
     } else
         revert = 1;
-
     auto bullet = std::make_shared<Bullet>(direction, 50);
     bullet->setPosition(getPosition());
     return nullptr;

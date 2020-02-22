@@ -49,6 +49,7 @@ private:
     std::vector<Platform> platforms;
     void generate(float startPoint, float endPoint);
     std::vector<Candy*> candies;
+    bool checkBoss();
 
 };
 
