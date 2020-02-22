@@ -54,7 +54,7 @@ link_libraries(libsfml-audio.2.5.1.dylib
         libsfml-window.dylib)
 
 set(TEST_FILES
-        )
+        factoryTest.cpp enemyTest.cpp)
 
 add_executable(test ${TEST_FILES} ${SOURCE_FILES})
 
