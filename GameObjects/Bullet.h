@@ -17,9 +17,14 @@ public:
     void move();
     void move(float offSetX, float offSetY);
     bool isFriendly();
+
 private:
     sf::Vector2f component;
     float mag;
+public:
+    const sf::Vector2f &getComponent() const;
+
+private:
     bool friendly;
 };
 

@@ -22,3 +22,7 @@ void Bullet::setPosition(sf::Vector2f position) {
 bool Bullet::isFriendly() {
     return friendly;
 }
+
+const sf::Vector2f &Bullet::getComponent() const {
+    return component;
+}
