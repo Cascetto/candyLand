@@ -59,11 +59,9 @@ void PlayState::handleControls() {
     float direction = 0;
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
         direction = -1;
-        hero->revert = 1;
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
         direction = 1;
-        hero->revert = 0;
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         if(hero->getPosition().y + hero->getGlobalBounds().height >= groundLevel-1)
@@ -131,7 +129,7 @@ void PlayState::update() {
             bullets.erase(bullets.begin() + i);
         }
     }
-    /*
+
     for (auto const& enemy : enemies) {
         auto bullet = enemy->action(heroPos);
         auto bottomRigth = enemy->getPosition();
@@ -142,7 +140,7 @@ void PlayState::update() {
                 enemy->animate();
         //enemy->fixHeight(groundLevel);
     }
-     */
+
     auto heroRect = hero->getGlobalBounds();
     for (auto candy : candies) {
         if(candy->getGlobalBounds().intersects(heroRect)) {

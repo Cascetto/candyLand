@@ -18,18 +18,16 @@ public:
     int revert{0};
     bool takeDamage();
     virtual std::shared_ptr<Bullet> action(sf::Vector2f heroPos) = 0;
-
-protected:
-    GameCharacter(float speed, sf::Texture& texture, float g);
-    ~GameCharacter() override;
-    sf::Vector2f speed;
-public:
     const sf::Vector2f &getSpeed() const;
 
     virtual void animate() = 0;
 
     void setSpeed(const sf::Vector2f &speed);
+
 protected:
+    GameCharacter(float speed, sf::Texture& texture, float g);
+    ~GameCharacter() override;
+    sf::Vector2f speed;
     int frameCounter {0};
 
 private:

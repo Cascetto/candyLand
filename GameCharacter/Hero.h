@@ -25,6 +25,8 @@ public:
     std::shared_ptr<Bullet> action(sf::Vector2f heroPos) override;
     void powerUp();
 
+    float getRof() const;
+
 private:
     float rof = 1.f / 2;
     float lastTime {0};

@@ -9,6 +9,10 @@ Hero::Hero(float speed, float g) : GameCharacter(speed, *AssetManager::heroTextu
     setTextureRect(sf::IntRect(0, 0, 80, 65));
 }
 
+float Hero::getRof() const {
+    return rof;
+}
+
 void Hero::jump() {
         speed.y -= 75;
 
