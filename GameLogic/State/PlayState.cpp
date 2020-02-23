@@ -24,7 +24,13 @@ PlayState::PlayState(TargetWindow targetWindow) : GameState(std::move(targetWind
     hero = std::make_shared<Hero>(20, 0);
     hero->setPosition(200, 200);
     hero->scale(3, 3);
-
+    for(int i = 0; i <  5; i++){
+        sf::Sprite heart;
+        heart.setTexture(*AssetManager::heartTexture);
+        heart.scale(0.1f, 0.1f);
+        heart.setPosition(20 + heart.getGlobalBounds().width * i, 20);
+        lives.emplace_back(heart);
+    }
     Timer::resetMainTime();
 }
 
@@ -63,7 +69,7 @@ void PlayState::handleControls() {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
         direction = 1;
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
         if(hero->getPosition().y + hero->getGlobalBounds().height >= groundLevel-1)
             hero->jump();
         else {
@@ -78,7 +84,7 @@ void PlayState::handleControls() {
             }
         }
     }
-    if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         auto bullet = hero->shoot(Timer::getMainTime());
         if(bullet != nullptr)
             bullets.emplace_back(bullet);
@@ -93,8 +99,9 @@ void PlayState::computeFrame() {
 }
 
 void PlayState::moveView() {
+    float distance = SLEEP_TIME * GAME_SPEED;
     sf::View temp = targetWindow->getView();
-    temp.move(SLEEP_TIME * GAME_SPEED, 0);
+    temp.move(distance, 0);
     for (auto& i : background) {
         float pos = i.getPosition().x;
         if (pos + i.getGlobalBounds().width < temp.getCenter().x - temp.getSize().x / 2) {
@@ -102,6 +109,7 @@ void PlayState::moveView() {
             generate(i.getPosition().x, i.getPosition().x + i.getGlobalBounds().width);
         }
     }
+    for(auto& heart : lives) heart.move(distance, 0);
     targetWindow->setView(temp);
 }
 
@@ -114,6 +122,7 @@ void PlayState::drawFrame() {
     for(const auto& e : enemies) targetWindow->draw(*e);
     for(const auto& c : candies) targetWindow->draw(*c);
     targetWindow->draw(*hero);
+    for(const auto& heart : lives) targetWindow->draw(heart);
 
 
 }
@@ -131,27 +140,36 @@ void PlayState::update() {
     }
 
     for (auto const& enemy : enemies) {
-        auto bullet = enemy->action(heroPos);
         auto bottomRigth = enemy->getPosition();
-        bottomRigth.x = enemy->getGlobalBounds().width;
-        bottomRigth.y = enemy->getGlobalBounds().height;
-        if(!isOutside(bottomRigth))
+        bottomRigth.x += enemy->getGlobalBounds().width;
+        bottomRigth.y += enemy->getGlobalBounds().height;
+        if(!isOutside(bottomRigth)){
+            auto bullet = enemy->action(heroPos);
             if(bullet != nullptr) bullets.emplace_back(bullet);
                 enemy->animate();
+        }
         //enemy->fixHeight(groundLevel);
     }
-
     auto heroRect = hero->getGlobalBounds();
-    for (auto candy : candies) {
-        if(candy->getGlobalBounds().intersects(heroRect)) {
+    for (int i = 0; i < candies.size(); i++) {
+        if(candies[i]->getGlobalBounds().intersects(heroRect)) {
             std::cout << "Preso!\n";
+            candies.erase(candies.begin() + i);
             hero->powerUp();
         }
+    }
+    for (int i = 0; i < enemies.size(); i++) {
+        if(enemies[i]->getGlobalBounds().intersects(heroRect))
+            if(!lives.empty()){
+                enemies.erase(enemies.begin() + i);
+                lives.pop_back();
+            }
     }
 }
 
 bool PlayState::detectCollision(std::shared_ptr<Bullet> &bullet) {
     bool result = false;
+    auto heroRect = hero->getGlobalBounds();
     if(bullet->isFriendly()) {
         for (int i = 0; i < enemies.size() && !result; i++) {
             if (bullet->getGlobalBounds().intersects(enemies[i]->getGlobalBounds())) {
@@ -162,14 +180,18 @@ bool PlayState::detectCollision(std::shared_ptr<Bullet> &bullet) {
             }
         }
     } else {
-        if (bullet->getGlobalBounds().intersects(hero->getGlobalBounds())) {
-            if(hero->takeDamage())
+        if (bullet->getGlobalBounds().intersects(heroRect)) {
+            if(!lives.empty()){
+                lives.pop_back();
                 result = true;
+            }
         }
     }
+
+
     return result;
 }
-
+//TODO ISOUTSIDE-> ISLEFT + ISRIGHT
 bool PlayState::isOutside(sf::Vector2f bottomRight) {
     auto topLeft = targetWindow->getView().getCenter() - (targetWindow->getView().getSize() / 2.f);
     return bottomRight.x < topLeft.x || bottomRight.y < topLeft.y || bottomRight.x > topLeft.x + targetWindow->getView().getSize().x * 2;

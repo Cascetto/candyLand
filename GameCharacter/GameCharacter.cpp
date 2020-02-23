@@ -26,9 +26,8 @@ void GameCharacter::move(sf::Vector2f direction) {
     speed.y += PlayState::gravity * SLEEP_TIME;
     //std::cout << "\n" << speed.y;
     sf::Sprite::move(direction.x * speed.x,direction.y * speed.y);
-    if(direction.x >= 0)
-        revert = 0;
-    else revert = 1;
+    if(direction.x > 0) revert = 0;
+    else if(direction.x < 0) revert = 1;
 }
 
 GameCharacter::GameCharacter(float speed, sf::Texture &texture, float g) : speed(sf::Vector2f(speed,0)), gravity(g) {

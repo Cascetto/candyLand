@@ -10,6 +10,8 @@ Archer::Archer(float gravity) : GameCharacter(0, *AssetManager::archerTexture, g
         frame.emplace_back(sf::IntRect(240 * i ,0,240,439));
     }
     setTextureRect(sf::IntRect(0, 0, 80, 94));
+    lastTime = Timer::getMainTime() + static_cast<float>(rand() % 1001 - 500) / 10000;
+    rof = static_cast<float>(rand() % 9 + 6) /  3.f;
 }
 
 void Archer::animate() {
@@ -23,14 +25,19 @@ void Archer::update() {
 }
 
 std::shared_ptr<Bullet> Archer::action(sf::Vector2f heroPos) {
-    sf::Vector2f direction(1, 0);
-    if(heroPos.x - getPosition().x < 0) {
-        revert = 0;
-        direction.x = -1;
-    } else
-        revert = 1;
-    auto bullet = std::make_shared<Bullet>(direction, 50);
-    bullet->setPosition(getPosition());
-    return nullptr;
+    std::shared_ptr<Bullet> bullet = nullptr;
+    float time = Timer::getMainTime();
+    if(time - lastTime >= rof) {
+        sf::Vector2f direction = heroPos - getPosition();
+        direction /= sqrtf(powf(direction.x, 2) + powf(direction.y, 2));
+        if(direction.x < 0)
+            revert = 0;
+        else
+            revert = 1;
+        bullet = std::make_shared<Bullet>(direction, 30);
+        bullet->setPosition(getPosition());
+        bullet->scale(0.3f, 0.3f),
+        lastTime = time;
+    }
     return bullet;
 }

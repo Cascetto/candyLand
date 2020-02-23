@@ -13,6 +13,7 @@ std::unique_ptr<sf::Texture> AssetManager::coconutTexture = nullptr;
 std::unique_ptr<sf::Texture> AssetManager::platformTexture = nullptr;
 std::unique_ptr<sf::Texture> AssetManager::bossTexture = nullptr;
 std::unique_ptr<sf::Texture> AssetManager::candyTexture = nullptr;
+std::unique_ptr<sf::Texture> AssetManager::heartTexture = nullptr;
 
 
 
@@ -27,6 +28,7 @@ void AssetManager::load() {
         archerTexture = std::make_unique<sf::Texture>();
         bossTexture = std::make_unique<sf::Texture>();
         candyTexture = std::make_unique<sf::Texture>();
+        heartTexture = std::make_unique<sf::Texture>();
 
 
 
@@ -39,6 +41,7 @@ void AssetManager::load() {
         platformTexture->loadFromFile( "../Assets/Images/platform.png");
         bossTexture->loadFromFile("../Assets/Images/BOSS.png");
         candyTexture->loadFromFile("../Assets/Images/lolly.png");
+        heartTexture->loadFromFile("../Assets/Images/heart.png");
 
     } catch (const std::exception& exception) {
         std::cerr << exception.what() << std::endl;

@@ -22,6 +22,7 @@ public:
     static std::unique_ptr<sf::Texture> platformTexture;
     static std::unique_ptr<sf::Texture> bossTexture;
     static std::unique_ptr<sf::Texture> candyTexture;
+    static std::unique_ptr<sf::Texture> heartTexture;
 
 
 };

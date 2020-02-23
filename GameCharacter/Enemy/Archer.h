@@ -8,10 +8,12 @@
 
 #include "../GameCharacter.h"
 #include "../../GameObjects/Bullet.h"
+#include "../../GameLogic/Timer.h"
 
-class Archer :  virtual public GameCharacter {
+
+class Archer : virtual public GameCharacter {
 private:
-    const float rof{1.f / 4};
+    float rof;
     float lastTime;
 public:
     Archer(float gravity);

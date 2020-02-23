@@ -30,8 +30,6 @@ public:
     static float gravity;
     void update();
 
-
-
 private:
     short int level {1};
     bool detectCollision(std::shared_ptr<Bullet>& bullet);
@@ -49,6 +47,7 @@ private:
     std::vector<Platform> platforms;
     void generate(float startPoint, float endPoint);
     std::vector<Candy*> candies;
+    std::vector<sf::Sprite> lives;
     bool checkBoss();
 
 };
