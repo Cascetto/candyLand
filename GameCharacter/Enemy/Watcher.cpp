@@ -16,10 +16,6 @@ void Watcher::animate() {
         if(frameCounter >= 100) frameCounter = 0;
 }
 
-void Watcher::update() {
-
-}
-
 std::shared_ptr<Bullet> Watcher::action(sf::Vector2f heroPos) {
     float distance = heroPos.x - getPosition().x;
     if(distance < 0)

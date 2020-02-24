@@ -8,10 +8,10 @@
 
 #include <cmath>
 #include "SFML/Graphics.hpp"
-#include "../GameLogic/Observer.h"
+#include "../GameLogic/ScoreSubject.h"
 #include "../GameObjects/Bullet.h"
 
-class GameCharacter : public sf::Sprite, public Observer {
+class GameCharacter : public sf::Sprite, public ScoreSubject {
 public:
     void fixHeight(float groundLevel);
     virtual void move(sf::Vector2f direction);
@@ -19,10 +19,11 @@ public:
     bool takeDamage();
     virtual std::shared_ptr<Bullet> action(sf::Vector2f heroPos) = 0;
     const sf::Vector2f &getSpeed() const;
-
     virtual void animate() = 0;
-
     void setSpeed(const sf::Vector2f &speed);
+    void removeObserver(ScoreObserver *o) override;
+    void registerObserver(ScoreObserver *o) override;
+    void notifyObservers() const override;
 
 protected:
     GameCharacter(float speed, sf::Texture& texture, float g);
@@ -32,6 +33,7 @@ protected:
 
 private:
     const float gravity;
+    std::vector<ScoreObserver*> observerList;
 };
 
 

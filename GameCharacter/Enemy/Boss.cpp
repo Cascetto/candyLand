@@ -17,12 +17,14 @@ std::shared_ptr<Bullet> Boss::action(sf::Vector2f heropos) {
 
 }
 
-void Boss::update() {
-    Watcher::update();
-}
-
 void Boss::animate() {
     Watcher::animate();
     setTextureRect(frame[((frameCounter++) % 7) + revert * 7]);
     if(frameCounter >= 140) frameCounter = 0;
+}
+
+void Boss::notifyObservers() const {
+    GameCharacter::notifyObservers();
+    GameCharacter::notifyObservers();
+    GameCharacter::notifyObservers();
 }

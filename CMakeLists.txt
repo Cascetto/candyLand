@@ -14,8 +14,8 @@ set(SOURCE_FILES
         GameLogic/State/MenuState.cpp
         GameLogic/State/RecordState.cpp
         GameLogic/State/PlayState.cpp
-        GameLogic/Subject.cpp
-        GameLogic/Observer.cpp
+        GameLogic/ScoreSubject.cpp
+        GameLogic/ScoreObserver.cpp
         GameLogic/Timer.cpp
         GameLogic/GameFactory.cpp
 

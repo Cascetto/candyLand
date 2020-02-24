@@ -13,14 +13,13 @@
 #include "../../GameCharacter/Enemy/Boss.h"
 #include "../../GameObjects/Candy.h"
 #include <list>
-
-
+#include <cstdlib>
 
 #define GAME_SPEED 200
 
 //TODO funzione difficoltà lv = 6 - (5/e((time - score/10))/100)
 
-class PlayState : public GameState {
+class PlayState : public GameState, public ScoreObserver {
 public:
     explicit PlayState(TargetWindow targetWindow);
     void handleSincInput() override;
@@ -28,14 +27,17 @@ public:
     void computeFrame() override;
     void drawFrame() override;
     static float gravity;
-    void update();
+    void updateGame();
+    void update() override;
 
 private:
     short int level {1};
+    long int score {0};
     bool detectCollision(std::shared_ptr<Bullet>& bullet);
     void moveView();
 
-    bool isOutside(sf::Vector2f bottomRight);
+    bool isOutsideLeft(float rightBorder);
+    bool isOutsideRight(float leftBorder);
 
     std::vector<sf::Sprite> background;
     float groundLevel;
@@ -48,7 +50,10 @@ private:
     void generate(float startPoint, float endPoint);
     std::vector<Candy*> candies;
     std::vector<sf::Sprite> lives;
+    std::vector<sf::Sprite> ammo;
     bool checkBoss();
+
+    sf::Text scoreLabel;
 
 };
 

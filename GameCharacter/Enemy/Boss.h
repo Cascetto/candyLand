@@ -10,12 +10,12 @@
 #include "Archer.h"
 #include "Watcher.h"
 
-class Boss :  public Brawler,  public Archer, public Watcher  {
+class Boss : public Brawler,  public Archer, public Watcher  {
 public:
     Boss(float gravity, float range, float speed);
     std::shared_ptr<Bullet> action(sf::Vector2f heropos) override;
-    void update() override;
     void animate() override;
+    void notifyObservers() const override;
 private:
     std::vector<sf::IntRect> frame;
 };

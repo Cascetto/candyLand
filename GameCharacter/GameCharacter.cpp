@@ -24,7 +24,6 @@ void GameCharacter::fixHeight(float groundLevel) {
 
 void GameCharacter::move(sf::Vector2f direction) {
     speed.y += PlayState::gravity * SLEEP_TIME;
-    //std::cout << "\n" << speed.y;
     sf::Sprite::move(direction.x * speed.x,direction.y * speed.y);
     if(direction.x > 0) revert = 0;
     else if(direction.x < 0) revert = 1;
@@ -32,12 +31,11 @@ void GameCharacter::move(sf::Vector2f direction) {
 
 GameCharacter::GameCharacter(float speed, sf::Texture &texture, float g) : speed(sf::Vector2f(speed,0)), gravity(g) {
     setTexture(texture);
-    GameEngine::getGameEngine()->timer.registerObserver(this);
 
 }
 
 GameCharacter::~GameCharacter() {
-    GameEngine::getGameEngine()->timer.removeObserver(this);
+
 }
 
 bool GameCharacter::takeDamage() {
@@ -52,3 +50,24 @@ void GameCharacter::setSpeed(const sf::Vector2f &speed) {
     GameCharacter::speed = speed;
 }
 
+void GameCharacter::notifyObservers() const {
+    for(auto observer : observerList)
+        observer->update();
+}
+
+void GameCharacter::removeObserver(ScoreObserver *o) {
+    for(int i = 0; i < observerList.size(); i++) {
+        if(observerList[i] == o)
+            observerList.erase(observerList.begin() + i);
+    }
+}
+
+void GameCharacter::registerObserver(ScoreObserver *o) {
+    bool found = false;
+    for(int i = 0; i < observerList.size() && !found; i++) {
+        if(observerList[i] == o)
+            found = true;
+    }
+    if(!found)
+        observerList.emplace_back(o);
+}

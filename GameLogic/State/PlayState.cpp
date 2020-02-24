@@ -31,6 +31,20 @@ PlayState::PlayState(TargetWindow targetWindow) : GameState(std::move(targetWind
         heart.setPosition(20 + heart.getGlobalBounds().width * i, 20);
         lives.emplace_back(heart);
     }
+    for(int i = 0; i < hero->maxAmmo; i++){
+        sf::Sprite coconut;
+        coconut.setTexture(*AssetManager::coconutTexture);
+        coconut.scale(0.4f, 0.4f);
+        coconut.setPosition(20 + coconut.getGlobalBounds().width * i, 200);
+        ammo.emplace_back(coconut);
+    }
+    scoreLabel = sf::Text("0", *AssetManager::mainFont, 216);
+    sf::Vector2f textPos = this->targetWindow->getView().getSize();
+    textPos.x = textPos.x - 60 - scoreLabel.getGlobalBounds().width;
+    textPos.y = 30;
+    scoreLabel.setPosition(textPos);
+    scoreLabel.setOutlineColor(sf::Color::Black);
+    scoreLabel.setOutlineThickness(5);
     Timer::resetMainTime();
 }
 
@@ -84,6 +98,9 @@ void PlayState::handleControls() {
             }
         }
     }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+        hero->currwntAmmo = hero->maxAmmo;
+    }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         auto bullet = hero->shoot(Timer::getMainTime());
         if(bullet != nullptr)
@@ -110,11 +127,13 @@ void PlayState::moveView() {
         }
     }
     for(auto& heart : lives) heart.move(distance, 0);
+    for(auto& a : ammo) a.move(distance, 0);
     targetWindow->setView(temp);
+    scoreLabel.move(distance, 0);
 }
 
 void PlayState::drawFrame() {
-    update();
+    updateGame();
     targetWindow->clear(sf::Color::Black);
     for(const auto& b : background) targetWindow->draw(b);
     for(const auto& platform : platforms) targetWindow->draw(platform);
@@ -123,27 +142,27 @@ void PlayState::drawFrame() {
     for(const auto& c : candies) targetWindow->draw(*c);
     targetWindow->draw(*hero);
     for(const auto& heart : lives) targetWindow->draw(heart);
+    for(int i = 0; i < hero->currwntAmmo; i++) targetWindow->draw(ammo[i]);
+
+
+    targetWindow->draw(scoreLabel);
 
 
 }
 
-void PlayState::update() {
+void PlayState::updateGame() {
     fixHeight();
     auto heroPos = hero->getPosition();
     for (unsigned long i = 0; i < bullets.size(); i++) {
         bullets[i]->move();
-        if (detectCollision(bullets[i]) || isOutside(
-                sf::Vector2f(bullets[i]->getPosition().x + bullets[i]->getGlobalBounds().width, bullets[i]->getPosition().y + bullets[i]->getGlobalBounds().height)
-                )) {
+        if (detectCollision(bullets[i]) ||
+        isOutsideLeft(bullets[i]->getPosition().x) ||
+        isOutsideRight(bullets[i]->getPosition().x + (bullets[i]->getGlobalBounds().width / 2))) {
             bullets.erase(bullets.begin() + i);
         }
     }
-
     for (auto const& enemy : enemies) {
-        auto bottomRigth = enemy->getPosition();
-        bottomRigth.x += enemy->getGlobalBounds().width;
-        bottomRigth.y += enemy->getGlobalBounds().height;
-        if(!isOutside(bottomRigth)){
+        if(!isOutsideRight(enemy->getPosition().x)){
             auto bullet = enemy->action(heroPos);
             if(bullet != nullptr) bullets.emplace_back(bullet);
                 enemy->animate();
@@ -174,6 +193,7 @@ bool PlayState::detectCollision(std::shared_ptr<Bullet> &bullet) {
         for (int i = 0; i < enemies.size() && !result; i++) {
             if (bullet->getGlobalBounds().intersects(enemies[i]->getGlobalBounds())) {
                 if (enemies[i]->takeDamage()) {
+                    enemies[i]->notifyObservers();
                     enemies.erase(enemies.begin() + i);
                 }
                 result = true;
@@ -187,14 +207,17 @@ bool PlayState::detectCollision(std::shared_ptr<Bullet> &bullet) {
             }
         }
     }
-
-
     return result;
 }
-//TODO ISOUTSIDE-> ISLEFT + ISRIGHT
-bool PlayState::isOutside(sf::Vector2f bottomRight) {
-    auto topLeft = targetWindow->getView().getCenter() - (targetWindow->getView().getSize() / 2.f);
-    return bottomRight.x < topLeft.x || bottomRight.y < topLeft.y || bottomRight.x > topLeft.x + targetWindow->getView().getSize().x * 2;
+
+bool PlayState::isOutsideLeft(float rightBorder) {
+    float viewLeftBorder = targetWindow->getView().getCenter().x - (targetWindow->getView().getSize().x / 2.f);
+    return rightBorder < viewLeftBorder;
+}
+
+bool PlayState::isOutsideRight(float leftBorder) {
+    float viewRightBorder = targetWindow->getView().getCenter().x + (targetWindow->getView().getSize().x / 2.f);
+    return leftBorder > viewRightBorder;
 }
 
 void PlayState::fixHeight() {
@@ -285,8 +308,10 @@ void PlayState::generate(float startPoint, float endPoint) {
             candies.emplace_back(candy);
             prevCase = 6;
         }
-        if (enemy != nullptr)
+        if (enemy != nullptr) {
             enemies.emplace_back(enemy);
+            enemy->registerObserver(this);
+        }
     }
 }
 
@@ -297,8 +322,19 @@ bool PlayState::checkBoss() {
         if(ptr != nullptr)
             return true;
     }
-
     return false;
+}
+
+void PlayState::update() {
+    score += 50;
+    char scoreStr[10];
+    sprintf(scoreStr, "%d", score);
+    std::string str(scoreStr);
+    float oldWidth = scoreLabel.getGlobalBounds().width;
+    scoreLabel.setString(str);
+    if(scoreLabel.getGlobalBounds().width > oldWidth)
+        scoreLabel.move(oldWidth - scoreLabel.getGlobalBounds().width, 0);
+    std::clog << "+50 punti\n";
 }
 
 

@@ -4,10 +4,6 @@
 
 #include "Brawler.h"
 
-void Brawler::update() {
-
-}
-
 void Brawler::animate() {
     setTextureRect(frame[((frameCounter++) % 10) + revert * 10]);
     if(frameCounter >= 100) frameCounter = 0;

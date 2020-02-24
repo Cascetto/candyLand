@@ -20,9 +20,6 @@ void Archer::animate() {
 
 }
 
-void Archer::update() {
-
-}
 
 std::shared_ptr<Bullet> Archer::action(sf::Vector2f heroPos) {
     std::shared_ptr<Bullet> bullet = nullptr;

@@ -12,7 +12,6 @@ class Watcher : virtual public GameCharacter {
 public:
     Watcher(float range, float g);
     void animate() override;
-    void update() override;
     std::shared_ptr<Bullet> action(sf::Vector2f heroPos) override;
     void updateRange(float range);
     void fadeOut();

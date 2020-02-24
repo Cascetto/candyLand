@@ -13,6 +13,7 @@
 class AssetManager {
 public:
     static void load();
+
     static std::unique_ptr<sf::Texture> backgroundTexture;
     static std::unique_ptr<sf::Texture> heroTexture;
     static std::unique_ptr<sf::Texture> watcherTexture;
@@ -23,6 +24,8 @@ public:
     static std::unique_ptr<sf::Texture> bossTexture;
     static std::unique_ptr<sf::Texture> candyTexture;
     static std::unique_ptr<sf::Texture> heartTexture;
+
+    static std::unique_ptr<sf::Font> mainFont;
 
 
 };

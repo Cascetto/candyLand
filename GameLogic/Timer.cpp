@@ -6,7 +6,7 @@
 
 sf::Clock Timer::mainClock = sf::Clock();
 
-void Timer::registerObserver(Observer* o) {
+void Timer::registerObserver(ScoreObserver* o) {
     observerlist.emplace_back(o);
 
 }
@@ -19,7 +19,7 @@ float Timer::getMainTime() {
     return mainClock.getElapsedTime().asSeconds();
 }
 
-void Timer::removeObserver(Observer* o) {
+void Timer::removeObserver(ScoreObserver* o) {
     observerlist.remove(o);
 }
 

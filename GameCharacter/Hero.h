@@ -10,7 +10,7 @@
 #include "SFML/Graphics.hpp"
 #include "GameCharacter.h"
 #include "../GameLogic/AssetManager.h"
-#include "../GameLogic/Subject.h"
+#include "../GameLogic/ScoreSubject.h"
 #include "../GameObjects/Bullet.h"
 #include "../GameLogic/GameFactory.h"
 
@@ -20,12 +20,14 @@ public:
     Hero(float speed, float g);
     void jump();
     void animate() override;
-    void update() override;
     std::shared_ptr<Bullet> shoot(float time);
     std::shared_ptr<Bullet> action(sf::Vector2f heroPos) override;
     void powerUp();
 
     float getRof() const;
+
+    int maxAmmo {6};
+    int currwntAmmo;
 
 private:
     float rof = 1.f / 2;
