@@ -131,7 +131,7 @@ void PlayState::computeFrame() {
 }
 
 void PlayState::moveView() {
-    float distance = SLEEP_TIME * GAME_SPEED;
+    float distance = SLEEP_TIME * GAME_SPEED * (1.f + static_cast<float>(level * 1.f / 6.f));
     sf::View temp = targetWindow->getView();
     temp.move(distance, 0);
     for (auto& i : background) {
@@ -268,13 +268,6 @@ void PlayState::fixHeight() {
             sf::Vector2f newSpeed(hero->getSpeed().x, 0);
             hero->setSpeed(newSpeed);
         }
-            // TODO nemici
-
-
-
-
-
-
     }
 }
 
@@ -353,6 +346,7 @@ void PlayState::update() {
     scoreLabel.setString(str);
     if(scoreLabel.getGlobalBounds().width > oldWidth)
         scoreLabel.move(oldWidth - scoreLabel.getGlobalBounds().width, 0);
+
     if(score <= 1000) level = 1;
     else if(score > 1000 && score <= 2000) level = 2;
     else if(score > 2000 && score <= 3000) level = 3;

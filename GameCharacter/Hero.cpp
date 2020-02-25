@@ -43,6 +43,6 @@ Bullet* Hero::action(sf::Vector2f heroPos) {
 }
 
 void Hero::powerUp() {
-    if(rof >= 0.2)
+    if(rof >= 0.5f)
         rof -= 0.02;
 }
