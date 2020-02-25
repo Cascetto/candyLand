@@ -12,7 +12,7 @@ class Brawler :  virtual public GameCharacter {
 public:
     Brawler(float speed, float g);
     void animate() override;
-    std::shared_ptr<Bullet> action(sf::Vector2f heroPos) override;
+    Bullet* action(sf::Vector2f heroPos) override;
 private:
     std::vector<sf::IntRect> frame;
 

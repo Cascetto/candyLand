@@ -19,7 +19,7 @@ Brawler::Brawler(float speed, float g) : GameCharacter(speed, *AssetManager::bra
 
 }
 
-std::shared_ptr<Bullet> Brawler::action(sf::Vector2f heroPos) {
+Bullet* Brawler::action(sf::Vector2f heroPos) {
     auto direction = heroPos - getPosition();
     if(direction.x < 0)
         revert = 0;

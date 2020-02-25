@@ -8,34 +8,37 @@
 float PlayState::gravity = 0.04f;
 
 PlayState::PlayState(TargetWindow targetWindow) : GameState(std::move(targetWindow)) {
-    background.emplace_back(sf::Sprite(*AssetManager::backgroundTexture));
-    background.emplace_back(sf::Sprite(*AssetManager::backgroundTexture));
-    float scale = this->targetWindow->getView().getSize().y / background[0].getGlobalBounds().height;
-    background[0].scale(scale, scale);
-    background[1].scale(scale, scale);
-    background[1].setPosition(background[0].getGlobalBounds().width, 0);
-    groundLevel = (7.98f / 11.85f) * background[0].getGlobalBounds().height;
-    generate(background[0].getPosition().x, background[0].getPosition().x + background[0].getGlobalBounds().width);
-    generate(background[1].getPosition().x, background[1].getPosition().x + background[1].getGlobalBounds().width);
-
-
+    background.emplace_back(new sf::Sprite(*AssetManager::backgroundTexture));
+    background.emplace_back(new sf::Sprite(*AssetManager::backgroundTexture));
+    float scale = this->targetWindow->getView().getSize().y / background[0]->getGlobalBounds().height;
+    background[0]->scale(scale, scale);
+    background[1]->scale(scale, scale);
+    background[1]->setPosition(background[0]->getGlobalBounds().width, 0);
+    groundLevel = (7.98f / 11.85f) * background[0]->getGlobalBounds().height;
+    generate(background[0]->getPosition().x, background[0]->getPosition().x + background[0]->getGlobalBounds().width);
+    generate(background[1]->getPosition().x, background[1]->getPosition().x + background[1]->getGlobalBounds().width);
+/*
+    sf::View newView = this->targetWindow->getView();
+    newView.setCenter(newView.getSize() / 2.f);
+    this->targetWindow->setView(newView);
+*/
     PlayState::gravity = (this->targetWindow->getView().getSize().y) / 4.5f;
 
     hero = std::make_shared<Hero>(20, 0);
     hero->setPosition(200, 200);
     hero->scale(3, 3);
     for(int i = 0; i <  5; i++){
-        sf::Sprite heart;
-        heart.setTexture(*AssetManager::heartTexture);
-        heart.scale(0.1f, 0.1f);
-        heart.setPosition(20 + heart.getGlobalBounds().width * i, 20);
+        sf::Sprite* heart = new sf::Sprite;
+        heart->setTexture(*AssetManager::heartTexture);
+        heart->scale(0.1f, 0.1f);
+        heart->setPosition(20 + heart->getGlobalBounds().width * i, 20);
         lives.emplace_back(heart);
     }
     for(int i = 0; i < hero->maxAmmo; i++){
-        sf::Sprite coconut;
-        coconut.setTexture(*AssetManager::coconutTexture);
-        coconut.scale(0.4f, 0.4f);
-        coconut.setPosition(20 + coconut.getGlobalBounds().width * i, 200);
+        sf::Sprite* coconut = new sf::Sprite;
+        coconut->setTexture(*AssetManager::coconutTexture);
+        coconut->scale(0.4f, 0.4f);
+        coconut->setPosition(20 + coconut->getGlobalBounds().width * i, 200);
         ammo.emplace_back(coconut);
     }
     scoreLabel = sf::Text("0", *AssetManager::mainFont, 216);
@@ -61,15 +64,26 @@ void PlayState::handleSincInput() {
             targetWindow->setView(sf::View(sf::FloatRect(0, 0, size.x, size.y)));
         }
         else if(event.type == sf::Event::KeyPressed) {
-            if(event.key.code == sf::Keyboard::Escape) {
-                //TODO PAUSE MENU
-            }
             //TODO RIMUOVI COMANDO 'Z'
-            else if(event.key.code == sf::Keyboard::Z) {
+            if(event.key.code == sf::Keyboard::Z) {
                 GameEngine::getGameEngine()->getStateHandler().removeState();
             }
             else if(event.key.code == sf::Keyboard::N){
                 enemies.emplace_back(GameFactory::makeEnemy(gravity));
+            } else if(event.key.code == sf::Keyboard::Escape) {
+                std::vector<sf::Sprite*> objects;
+                for(auto b : background) objects.emplace_back(b);
+                for(auto p : platforms) objects.emplace_back(p);
+                for(auto c : candies) objects.emplace_back(c);
+                for(auto e : enemies) objects.emplace_back(e);
+                for(auto b : bullets) objects.emplace_back(b);
+                objects.emplace_back(&(*hero));
+                for(auto l : lives) objects.emplace_back(l);
+                for(int i = 0; i < hero->currwntAmmo; i++) objects.emplace_back(ammo[i]);
+
+
+                std::shared_ptr<GameState> pause = std::make_shared<PauseState>(targetWindow, objects);
+                GameEngine::getGameEngine()->getStateHandler().addState(pause);
             }
         }
     }
@@ -91,7 +105,8 @@ void PlayState::handleControls() {
             float left = hero->getPosition().x;
             float right= left + hero->getGlobalBounds().width;
             for(const auto &i : platforms){
-                if(((i.left <= left && left <= i.right) || (i.left <= right && right <= i.right)) && (i.top <= toe && toe <= i.top + i.height) && (hero->getSpeed().y >= 0)){
+                if(((i->left <= left && left <= i->right) || (i->left <= right && right <= i->right)) &&
+                (i->top <= toe && toe <= i->top + i->height) && (hero->getSpeed().y >= 0)){
                     hero->jump();
                     break;
                 }
@@ -120,14 +135,14 @@ void PlayState::moveView() {
     sf::View temp = targetWindow->getView();
     temp.move(distance, 0);
     for (auto& i : background) {
-        float pos = i.getPosition().x;
-        if (pos + i.getGlobalBounds().width < temp.getCenter().x - temp.getSize().x / 2) {
-            i.move(2 * i.getGlobalBounds().width, 0);
-            generate(i.getPosition().x, i.getPosition().x + i.getGlobalBounds().width);
+        float pos = i->getPosition().x;
+        if (pos + i->getGlobalBounds().width < temp.getCenter().x - temp.getSize().x / 2) {
+            i->move(2 * i->getGlobalBounds().width, 0);
+            generate(i->getPosition().x, i->getPosition().x + i->getGlobalBounds().width);
         }
     }
-    for(auto& heart : lives) heart.move(distance, 0);
-    for(auto& a : ammo) a.move(distance, 0);
+    for(auto& heart : lives) heart->move(distance, 0);
+    for(auto& a : ammo) a->move(distance, 0);
     targetWindow->setView(temp);
     scoreLabel.move(distance, 0);
 }
@@ -135,14 +150,14 @@ void PlayState::moveView() {
 void PlayState::drawFrame() {
     updateGame();
     targetWindow->clear(sf::Color::Black);
-    for(const auto& b : background) targetWindow->draw(b);
-    for(const auto& platform : platforms) targetWindow->draw(platform);
+    for(const auto& b : background) targetWindow->draw(*b);
+    for(const auto& platform : platforms) targetWindow->draw(*platform);
     for(const auto& bullet : bullets) targetWindow->draw(*bullet);
     for(const auto& e : enemies) targetWindow->draw(*e);
     for(const auto& c : candies) targetWindow->draw(*c);
     targetWindow->draw(*hero);
-    for(const auto& heart : lives) targetWindow->draw(heart);
-    for(int i = 0; i < hero->currwntAmmo; i++) targetWindow->draw(ammo[i]);
+    for(const auto& heart : lives) targetWindow->draw(*heart);
+    for(int i = 0; i < hero->currwntAmmo; i++) targetWindow->draw(*ammo[i]);
 
 
     targetWindow->draw(scoreLabel);
@@ -172,7 +187,6 @@ void PlayState::updateGame() {
     auto heroRect = hero->getGlobalBounds();
     for (int i = 0; i < candies.size(); i++) {
         if(candies[i]->getGlobalBounds().intersects(heroRect)) {
-            std::cout << "Preso!\n";
             candies.erase(candies.begin() + i);
             hero->powerUp();
         }
@@ -184,9 +198,13 @@ void PlayState::updateGame() {
                 lives.pop_back();
             }
     }
+    if(lives.empty() || isOutsideLeft(heroRect.left + heroRect.width)){
+        std::shared_ptr<GameState> insRecordState = std::make_shared<RecordInsState>(targetWindow, score);
+        GameEngine::getGameEngine()->getStateHandler().addState(insRecordState);
+    }
 }
 
-bool PlayState::detectCollision(std::shared_ptr<Bullet> &bullet) {
+bool PlayState::detectCollision(Bullet* bullet) {
     bool result = false;
     auto heroRect = hero->getGlobalBounds();
     if(bullet->isFriendly()) {
@@ -244,8 +262,9 @@ void PlayState::fixHeight() {
         hero->setSpeed(newSpeed);
     }
     for(const auto &i : platforms){
-        if(((i.left <= left && left <= i.right) || (i.left <= right && right <= i.right)) && (i.top <= toe && toe <= i.top + i.height) && (hero->getSpeed().y >= 0)){
-            hero->setPosition(sf::Vector2f(left,(i.top - hero->getGlobalBounds().height)));
+        if(((i->left <= left && left <= i->right) || (i->left <= right && right <= i->right)) &&
+        (i->top <= toe && toe <= i->top + i->height) && (hero->getSpeed().y >= 0)){
+            hero->setPosition(sf::Vector2f(left,(i->top - hero->getGlobalBounds().height)));
             sf::Vector2f newSpeed(hero->getSpeed().x, 0);
             hero->setSpeed(newSpeed);
         }
@@ -281,13 +300,13 @@ void PlayState::generate(float startPoint, float endPoint) {
         } else if ((generateCase > 20 && generateCase <= 40) && prevCase != 2  && prevCase != 3) {
             auto platform = GameFactory::makePlatform();
             platform->setPosition(startPoint, offset);
-            platforms.emplace_back(*platform);
+            platforms.emplace_back(platform);
             startPoint += 500 - 50 * (level - 1);
             prevCase = 2;
         } else if ((generateCase > 40 && generateCase <= 60) && prevCase != 2 && prevCase != 3) {
             auto platform = GameFactory::makePlatform();
             platform->setPosition(startPoint, offset);
-            platforms.emplace_back(*platform);
+            platforms.emplace_back(platform);
             enemy = GameFactory::makeArcher(gravity);
             enemy->setPosition(startPoint, offset - enemy->getGlobalBounds().height);
             startPoint += 500 - 50 * (level - 1);
@@ -328,13 +347,18 @@ bool PlayState::checkBoss() {
 void PlayState::update() {
     score += 50;
     char scoreStr[10];
-    sprintf(scoreStr, "%d", score);
+    sprintf(scoreStr, "%ld", score);
     std::string str(scoreStr);
     float oldWidth = scoreLabel.getGlobalBounds().width;
     scoreLabel.setString(str);
     if(scoreLabel.getGlobalBounds().width > oldWidth)
         scoreLabel.move(oldWidth - scoreLabel.getGlobalBounds().width, 0);
-    std::clog << "+50 punti\n";
+    if(score <= 1000) level = 1;
+    else if(score > 1000 && score <= 2000) level = 2;
+    else if(score > 2000 && score <= 3000) level = 3;
+    else if(score > 3000 && score <= 4000) level = 4;
+    else if(score > 5000 && score <= 6000) level = 5;
+    else level = 6;
 }
 
 

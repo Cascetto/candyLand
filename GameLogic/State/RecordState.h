@@ -8,6 +8,7 @@
 
 #include "GameState.h"
 #include "../GameEngine.h"
+#include "RecordInsState.h"
 
 class RecordState : public GameState {
 public:
@@ -16,6 +17,8 @@ public:
     void computeFrame() override;
     void drawFrame() override;
 private:
+    std::vector<Record> entries;
+    std::vector<sf::Text> record;
 };
 
 #endif //ISANGRYREVISED_RECORDSTATE_H

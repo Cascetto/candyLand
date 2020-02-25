@@ -25,8 +25,8 @@ void Hero::animate() {
         setTextureRect(sf::IntRect(80 * frameCounter + 400 * revert,0,80,65));
 }
 
-std::shared_ptr<Bullet> Hero::shoot(float time) {
-    std::shared_ptr<Bullet> bullet = nullptr;
+Bullet* Hero::shoot(float time) {
+    Bullet* bullet = nullptr;
     if((time - lastTime >= rof) && (currwntAmmo > 0)) {
         bullet = GameFactory::makeBullet(sf::Vector2f(revert == 0 ? 1 : -1, 0), true);
         bullet->setPosition(getPosition());
@@ -38,7 +38,7 @@ std::shared_ptr<Bullet> Hero::shoot(float time) {
     return bullet;
 }
 
-std::shared_ptr<Bullet> Hero::action(sf::Vector2f heroPos) {
+Bullet* Hero::action(sf::Vector2f heroPos) {
     return nullptr;
 }
 

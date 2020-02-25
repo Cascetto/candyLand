@@ -4,8 +4,8 @@
 
 #include "GameFactory.h"
 
-std::shared_ptr<Bullet> GameFactory::makeBullet(sf::Vector2f direction, bool friendly) {
-    auto bullet = std::make_shared<Bullet>(direction, 50, friendly);
+Bullet* GameFactory::makeBullet(sf::Vector2f direction, bool friendly) {
+    auto bullet = new Bullet(direction, 50, friendly);
     return bullet;
 }
 

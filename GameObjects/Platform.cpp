@@ -6,8 +6,6 @@
 
 Platform::Platform(): sf::Sprite(*AssetManager::platformTexture), left(0), right(width), top(0) {
     setTextureRect(sf::IntRect(0,0,width,height));
-
-
 }
 
 void Platform::setPosition(float x, float y) {

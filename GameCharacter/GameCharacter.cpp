@@ -39,7 +39,7 @@ GameCharacter::~GameCharacter() {
 }
 
 bool GameCharacter::takeDamage() {
-    return true;
+    return --lives == 0;
 }
 
 const sf::Vector2f &GameCharacter::getSpeed() const {

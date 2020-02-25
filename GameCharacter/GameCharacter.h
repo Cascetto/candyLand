@@ -17,7 +17,7 @@ public:
     virtual void move(sf::Vector2f direction);
     int revert{0};
     bool takeDamage();
-    virtual std::shared_ptr<Bullet> action(sf::Vector2f heroPos) = 0;
+    virtual Bullet* action(sf::Vector2f heroPos) = 0;
     const sf::Vector2f &getSpeed() const;
     virtual void animate() = 0;
     void setSpeed(const sf::Vector2f &speed);
@@ -30,6 +30,7 @@ protected:
     ~GameCharacter() override;
     sf::Vector2f speed;
     int frameCounter {0};
+    unsigned short int lives {2};
 
 private:
     const float gravity;

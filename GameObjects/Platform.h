@@ -9,7 +9,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include "../GameLogic/AssetManager.h"
 
-class Platform : public sf::Sprite{
+class Platform : public sf::Sprite {
 public:
     Platform();
     float left;

@@ -8,9 +8,10 @@ Boss::Boss(float gravity, float range, float speed):  GameCharacter(speed, *Asse
     for (int i = 0; i < 14; i++) {
         frame.emplace_back(sf::IntRect(835 * i ,0,835,587));
     }
+    GameCharacter::lives = 4;
 }
 
-std::shared_ptr<Bullet> Boss::action(sf::Vector2f heropos) {
+Bullet* Boss::action(sf::Vector2f heropos) {
     Watcher::action(heropos);
     Brawler::action(heropos);
     return Archer::action(heropos);

@@ -8,7 +8,7 @@ Watcher::Watcher(float range, float g) : GameCharacter(0, *AssetManager::watcher
     setTextureRect(sf::IntRect(0, 0, 680, 472));
     for (int i = 0; i < 20; i++)
         frame.emplace_back(sf::IntRect(680 * i,0,680,430));
-
+    GameCharacter::lives = 1;
 }
 
 void Watcher::animate() {
@@ -16,7 +16,7 @@ void Watcher::animate() {
         if(frameCounter >= 100) frameCounter = 0;
 }
 
-std::shared_ptr<Bullet> Watcher::action(sf::Vector2f heroPos) {
+Bullet* Watcher::action(sf::Vector2f heroPos) {
     float distance = heroPos.x - getPosition().x;
     if(distance < 0)
         revert = 0;

@@ -20,8 +20,8 @@ public:
     Hero(float speed, float g);
     void jump();
     void animate() override;
-    std::shared_ptr<Bullet> shoot(float time);
-    std::shared_ptr<Bullet> action(sf::Vector2f heroPos) override;
+    Bullet* shoot(float time);
+    Bullet* action(sf::Vector2f heroPos) override;
     void powerUp();
 
     float getRof() const;

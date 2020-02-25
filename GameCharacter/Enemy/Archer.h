@@ -18,7 +18,7 @@ private:
 public:
     Archer(float gravity);
     void animate() override;
-    std::shared_ptr<Bullet> action(sf::Vector2f heroPos) override;
+    Bullet* action(sf::Vector2f heroPos) override;
 private:
     std::vector<sf::IntRect> frame;
 };
