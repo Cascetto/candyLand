@@ -48,7 +48,9 @@ PlayState::PlayState(TargetWindow targetWindow) : GameState(std::move(targetWind
     scoreLabel.setPosition(textPos);
     scoreLabel.setOutlineColor(sf::Color::Black);
     scoreLabel.setOutlineThickness(5);
-    Timer::resetMainTime();
+    Timer::getTimer().resetMainTime();
+    Timer::getTimer().registerObserver(&(hero->getAnimator()));
+
 }
 
 void PlayState::handleSincInput() {
@@ -117,7 +119,7 @@ void PlayState::handleControls() {
         hero->currwntAmmo = hero->maxAmmo;
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        auto bullet = hero->shoot(Timer::getMainTime());
+        auto bullet = hero->shoot(Timer::getTimer().getMainTime());
         if(bullet != nullptr)
             bullets.emplace_back(bullet);
     }
@@ -127,7 +129,7 @@ void PlayState::handleControls() {
 void PlayState::computeFrame() {
     moveView();
     handleControls();
-    //hero->fixHeight(groundLevel);
+    Timer::getTimer().check();
 }
 
 void PlayState::moveView() {
@@ -180,7 +182,6 @@ void PlayState::updateGame() {
         if(!isOutsideRight(enemy->getPosition().x)){
             auto bullet = enemy->action(heroPos);
             if(bullet != nullptr) bullets.emplace_back(bullet);
-                enemy->animate();
         }
         //enemy->fixHeight(groundLevel);
     }
@@ -248,9 +249,6 @@ void PlayState::fixHeight() {
             sf::Vector2f newSpeed(i->getSpeed().x, 0);
             i->setSpeed(newSpeed);
         }
-
-
-
 
     }
     float toe = hero->getPosition().y + hero->getGlobalBounds().height;

@@ -8,21 +8,25 @@
 #include <list>
 
 #include "SFML/Graphics.hpp"
-#include "ScoreSubject.h"
+#include "TimeSubject.h"
 
 
-class Timer : public ScoreSubject {
+class Timer : public TimeSubject {
 public:
-    void registerObserver(ScoreObserver* o) override;
-    void removeObserver(ScoreObserver* o) override ;
-    void notifyObservers() const override ;
+    static Timer& getTimer();
+
+    void registerObserver(TimeObserver* o) override;
+    void removeObserver(TimeObserver* o) override;
+    void notifyObservers() const override;
     void check();
-    static float getMainTime();
-    static void resetMainTime();
-    std::list<ScoreObserver*> observerlist;
+    float getMainTime();
+    void resetMainTime();
+    std::list<TimeObserver*> observerlist;
 private:
+    static Timer* myTimer;
+    Timer() = default;
     sf::Clock clock;
-    static sf::Clock mainClock;
+    sf::Clock mainClock;
 };
 
 

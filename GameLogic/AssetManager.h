@@ -13,6 +13,7 @@
 class AssetManager {
 public:
     static void load();
+    static void setFrames();
 
     static std::unique_ptr<sf::Texture> backgroundTexture;
     static std::unique_ptr<sf::Texture> heroTexture;
@@ -26,6 +27,15 @@ public:
     static std::unique_ptr<sf::Texture> heartTexture;
 
     static std::unique_ptr<sf::Font> mainFont;
+
+    static std::unique_ptr<std::vector<sf::IntRect>> heroFrames;
+    static std::unique_ptr<std::vector<sf::IntRect>> archerFrames;
+    static std::unique_ptr<std::vector<sf::IntRect>> brawlerFrames;
+    static std::unique_ptr<std::vector<sf::IntRect>> watcherFrames;
+    static std::unique_ptr<std::vector<sf::IntRect>> bossFrames;
+
+
+    virtual ~AssetManager() = 0;
 
 
 };

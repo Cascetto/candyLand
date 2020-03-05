@@ -7,6 +7,8 @@
 
 Hero::Hero(float speed, float g) : GameCharacter(speed, *AssetManager::heroTexture, g), currwntAmmo{maxAmmo} {
     setTextureRect(sf::IntRect(0, 0, 80, 65));
+    animatorManager.setFrames(*AssetManager::heroFrames);
+    animatorManager.setFrameTime(2);
 }
 
 float Hero::getRof() const {

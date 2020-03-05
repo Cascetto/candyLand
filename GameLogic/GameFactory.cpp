@@ -19,6 +19,7 @@ GameCharacter* GameFactory::makeEnemy(float gravity) {
 GameCharacter* GameFactory::makeBrawlewr(float gravity) {
     auto enemy = new Brawler(3, gravity);
     enemy->scale(0.3f, 0.3f);
+    Timer::getTimer().registerObserver(&enemy->getAnimator());
     //todo set speed
     return enemy;
 }
@@ -26,18 +27,20 @@ GameCharacter* GameFactory::makeBrawlewr(float gravity) {
 GameCharacter* GameFactory::makeArcher(float gravity) {
     auto enemy = new Archer(gravity);
     enemy->scale(3, 3);
+    Timer::getTimer().registerObserver(&enemy->getAnimator());
     return enemy;
 }
 
 GameCharacter* GameFactory::makeBoss(float gravity) {
     auto enemy = new Boss(gravity, 500, 2);
+    Timer::getTimer().registerObserver(&enemy->getAnimator());
     return enemy;
 }
 
 GameCharacter* GameFactory::makeWatcher(float gravity) {
-    //todo range logic
     auto enemy = new Watcher(1000, gravity);
     enemy->scale(0.6f,0.6f);
+    Timer::getTimer().registerObserver(&enemy->getAnimator());
     return enemy;
 }
 

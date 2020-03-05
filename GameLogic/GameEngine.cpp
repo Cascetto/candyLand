@@ -6,7 +6,7 @@
 
 std::shared_ptr<GameEngine> GameEngine::myGameEngine = nullptr;
 
-GameEngine::GameEngine() {
+GameEngine::GameEngine() : timer(Timer::getTimer()) {
     srand(time(NULL));
 }
 
@@ -30,6 +30,7 @@ void GameEngine::init() {
         gameWindow->setFramerateLimit(FPS);
         stateHandler.addState(std::make_shared<MenuState>(gameWindow));
         AssetManager::load();
+        AssetManager::setFrames();
     }
 }
 
