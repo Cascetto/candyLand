@@ -14,13 +14,11 @@
 
 class GameCharacter : public sf::Sprite, public ScoreSubject {
 public:
-    void fixHeight(float groundLevel);
     virtual void move(sf::Vector2f direction);
     int revert{0};
     bool takeDamage();
     virtual Bullet* action(sf::Vector2f heroPos) = 0;
     const sf::Vector2f &getSpeed() const;
-    virtual void animate() = 0;
     void setSpeed(const sf::Vector2f &speed);
     void removeObserver(ScoreObserver *o) override;
     void registerObserver(ScoreObserver *o) override;
@@ -43,6 +41,7 @@ public:
         int frameTime {0};
         int activeFrame {0};
 
+
         GameCharacter* obj;
 
         std::vector<sf::IntRect> frames;
@@ -53,10 +52,11 @@ protected:
     GameCharacter(float speed, sf::Texture& texture, float g);
     ~GameCharacter() override;
     sf::Vector2f speed;
-    int frameCounter {0};
     unsigned short int lives {2};
     Animator animatorManager;
 
+    sf::Sound hitSound;
+    sf::Sound shootSound;
 
 
 private:

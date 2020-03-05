@@ -20,7 +20,7 @@ GameCharacter* GameFactory::makeBrawlewr(float gravity) {
     auto enemy = new Brawler(3, gravity);
     enemy->scale(0.3f, 0.3f);
     Timer::getTimer().registerObserver(&enemy->getAnimator());
-    //todo set speed
+    enemy->setSpeed(sf::Vector2f(static_cast<float>(rand() % 16 + 15) / 10.f, enemy->getSpeed().y));
     return enemy;
 }
 

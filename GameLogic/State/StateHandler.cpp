@@ -16,7 +16,6 @@ void StateHandler::removeState() {
     if (!livingStates.empty()) {
         livingStates.pop();
     } else std::cerr << "Stack degli stati vuoto";
-    //TODO SE STACK VUOTO AGGIUNGI STATO INIZIALE
 }
 
 const std::shared_ptr<GameState>& StateHandler::getState() {

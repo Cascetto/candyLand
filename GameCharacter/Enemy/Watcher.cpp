@@ -11,11 +11,7 @@ Watcher::Watcher(float range, float g) : GameCharacter(0, *AssetManager::watcher
     GameCharacter::lives = 1;
     animatorManager.setFrames(*AssetManager::watcherFrames);
     animatorManager.setFrameTime(1);
-}
-
-void Watcher::animate() {
-    setTextureRect(frame[((frameCounter++) % 10) + revert * 10]);
-        if(frameCounter >= 100) frameCounter = 0;
+    hitSound.setBuffer(*AssetManager::watcherDamage);
 }
 
 Bullet* Watcher::action(sf::Vector2f heroPos) {

@@ -26,6 +26,7 @@ void MenuState::handleSincInput() {
                 switch (menu.getAction()) {
                     case Menu::MenuItem::TYPE::START:
                         GameEngine::getGameEngine()->getStateHandler().addState(std::make_shared<PlayState>(targetWindow));
+                        GameEngine::getGameEngine()->playGameOst();
                         break;
                     case Menu::MenuItem::TYPE::RECORD:
                         GameEngine::getGameEngine()->getStateHandler().addState(std::make_shared<RecordState>(targetWindow));

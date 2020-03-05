@@ -40,3 +40,7 @@ Timer & Timer::getTimer() {
         myTimer = new Timer();
     return *myTimer;
 }
+
+void Timer::clearObservers() {
+    observerlist.clear();
+}

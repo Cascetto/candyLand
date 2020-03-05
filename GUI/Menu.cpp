@@ -22,14 +22,6 @@ Menu::MenuItem::MenuItem(Menu::MenuItem::TYPE type) : type(type){
         case MenuItem::TYPE::RESUME:
             btnText = "Riprendi";
             break;
-        case MenuItem::TYPE::SCORE:
-            btnText = "Punteggio attuale";
-            //TODO CREA OBSERVER PUNTEGGIO
-            break;
-        case MenuItem::TYPE::INFO:
-            btnText = "Informazioni giocatore";
-            //TODO CREA OBSERVER STATISTICHE
-            break;
         default:
             std::cerr << "Oggetto sbagliato";
     }

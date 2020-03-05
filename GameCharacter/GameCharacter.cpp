@@ -5,19 +5,10 @@
 #include "GameCharacter.h"
 #include "../GameLogic/State/PlayState.h"
 
-void GameCharacter::fixHeight(float groundLevel) {
-    float left = getPosition().x;
-    float right = left + getGlobalBounds().width;
-    float toe = getPosition().y + getGlobalBounds().height ;
-    if(getPosition().y + getGlobalBounds().height >= groundLevel) {
-        setPosition(getPosition().x, groundLevel - getGlobalBounds().height);
-        speed.y = 0;
-    }
-    if((toe <= 710 && toe >= 700) && (left > 1500 - getGlobalBounds().width && right < 2000 + getGlobalBounds().width)) {
-        speed.y = 0;
-        setPosition(left, 700 - getGlobalBounds().height);
-    }
-
+GameCharacter::GameCharacter(float speed, sf::Texture &texture, float g) : speed(sf::Vector2f(speed,0)), gravity(g),
+                                                                           animatorManager(GameCharacter::Animator(this)) {
+    setTexture(texture);
+    shootSound.setBuffer(*AssetManager::enemyShoot);
 }
 
 void GameCharacter::move(sf::Vector2f direction) {
@@ -33,12 +24,6 @@ void GameCharacter::move(sf::Vector2f direction) {
     }
 }
 
-GameCharacter::GameCharacter(float speed, sf::Texture &texture, float g) : speed(sf::Vector2f(speed,0)), gravity(g),
-animatorManager(GameCharacter::Animator(this)) {
-    setTexture(texture);
-
-}
-
 GameCharacter::Animator & GameCharacter::getAnimator() {
     return animatorManager;
 }
@@ -48,6 +33,7 @@ GameCharacter::~GameCharacter() {
 }
 
 bool GameCharacter::takeDamage() {
+    hitSound.play();
     return --lives == 0;
 }
 

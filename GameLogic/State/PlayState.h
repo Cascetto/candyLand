@@ -29,6 +29,7 @@ public:
     static float gravity;
     void updateGame();
     void update() override;
+    void clear();
 
 private:
     short int level {1};

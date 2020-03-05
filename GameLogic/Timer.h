@@ -18,6 +18,7 @@ public:
     void registerObserver(TimeObserver* o) override;
     void removeObserver(TimeObserver* o) override;
     void notifyObservers() const override;
+    void clearObservers();
     void check();
     float getMainTime();
     void resetMainTime();

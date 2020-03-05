@@ -19,10 +19,10 @@ class Hero : public GameCharacter {
 public:
     Hero(float speed, float g);
     void jump();
-    void animate() override;
     Bullet* shoot(float time);
     Bullet* action(sf::Vector2f heroPos) override;
     void powerUp();
+    void takeDamage();
 
     float getRof() const;
 
@@ -32,6 +32,9 @@ public:
 private:
     float rof = 1.f / 2;
     float lastTime {0};
+    sf::Sound jumpSound;
+    sf::Sound powerUpSound;
+    sf::Sound reloadSound;
 };
 
 

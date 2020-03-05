@@ -9,16 +9,12 @@ Brawler::Brawler(float speed, float g) : GameCharacter(speed, *AssetManager::bra
     for (int i = 0; i < 20; i++) {
         frame.emplace_back(sf::IntRect(579 * i ,0,579,763));
     }
-
-    if(frameCounter >= 100) frameCounter = 0;
     animatorManager.setFrames(*AssetManager::brawlerFrames);
     animatorManager.setFrameTime(1);
+    hitSound.setBuffer(*AssetManager::brawlerDamage);
 
 }
 
-void Brawler::animate() {
-    setTextureRect(frame[((frameCounter++) % 10) + revert * 10]);
-}
 
 Bullet* Brawler::action(sf::Vector2f heroPos) {
     auto direction = heroPos - getPosition();
@@ -31,7 +27,6 @@ Bullet* Brawler::action(sf::Vector2f heroPos) {
     else {
         revert = 1;
         animatorManager.action = Animator::IDLE_BACK;
-
     }
     return nullptr;
 }

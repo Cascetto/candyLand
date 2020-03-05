@@ -15,12 +15,8 @@ Archer::Archer(float gravity) : GameCharacter(0, *AssetManager::archerTexture, g
     GameCharacter::lives = 3;
     animatorManager.setFrames(*AssetManager::archerFrames);
     animatorManager.setFrameTime(1);
-}
 
-void Archer::animate() {
-    //setTextureRect(frame[((frameCounter++) % 5) + revert * 5]);
-    if(frameCounter >= 50) frameCounter = 0;
-
+    hitSound.setBuffer(*AssetManager::archerDamage);
 }
 
 
@@ -42,6 +38,7 @@ Bullet* Archer::action(sf::Vector2f heroPos) {
         bullet->setPosition(getPosition());
         bullet->scale(0.3f, 0.3f),
         lastTime = time;
+        shootSound.play();
     }
     return bullet;
 }
