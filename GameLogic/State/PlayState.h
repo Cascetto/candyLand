@@ -31,7 +31,7 @@ public:
     void update() override;
 
 private:
-    short int level {6};
+    short int level {1};
     long int score {0};
     bool detectCollision(Bullet* bullet);
     void moveView();

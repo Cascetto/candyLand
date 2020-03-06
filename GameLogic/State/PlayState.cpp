@@ -7,7 +7,7 @@
 
 float PlayState::gravity = 0.04f;
 
-PlayState::PlayState(TargetWindow targetWindow) : GameState(std::move(targetWindow)) {
+PlayState:: PlayState(TargetWindow targetWindow) : GameState(std::move(targetWindow)) {
     background.emplace_back(new sf::Sprite(*AssetManager::backgroundTexture));
     background.emplace_back(new sf::Sprite(*AssetManager::backgroundTexture));
     float scale = this->targetWindow->getView().getSize().y / background[0]->getGlobalBounds().height;
