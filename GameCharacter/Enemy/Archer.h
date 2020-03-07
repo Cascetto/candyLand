@@ -17,7 +17,6 @@ private:
     float lastTime;
 public:
     Archer(float gravity);
-    void animate() override;
     Bullet* action(sf::Vector2f heroPos) override;
 private:
     std::vector<sf::IntRect> frame;

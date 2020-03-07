@@ -22,6 +22,7 @@
 class GameEngine {
 public:
     GameEngine();
+    ~GameEngine();
     static std::shared_ptr<GameEngine> getGameEngine();
 
     const std::shared_ptr<sf::RenderWindow>& getWindow() const;
@@ -31,10 +32,10 @@ public:
     void start();
     void stop();
 
-    void resume();
-    void pause();
-
     Timer timer;
+
+    void playMain();
+    void playGameOst();
 
 private:
     static std::shared_ptr<GameEngine> myGameEngine;
@@ -43,6 +44,7 @@ private:
     std::shared_ptr<sf::RenderWindow> gameWindow;
 
     sf::Clock gameClock;
+    sf::Music soundtrack;
 
 };
 

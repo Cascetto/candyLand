@@ -31,6 +31,7 @@ void PauseState::handleSincInput() {
 
     while(targetWindow->pollEvent(event)) {
         sf::View newView;
+        PlayState* temp = nullptr;
         if(event.type == sf::Event::KeyPressed) {
             if(event.key.code == sf::Keyboard::Escape) {
                 GameEngine::getGameEngine()->getStateHandler().removeState();
@@ -45,7 +46,10 @@ void PauseState::handleSincInput() {
                         break;
                     case Menu::MenuItem::QUIT:
                         GameEngine::getGameEngine()->getStateHandler().removeState();
+                        temp = dynamic_cast<PlayState*>(&(*GameEngine::getGameEngine()->getStateHandler().getState()));
+                        temp->clear();
                         GameEngine::getGameEngine()->getStateHandler().removeState();
+                        GameEngine::getGameEngine()->playMain();
                         newView = targetWindow->getView();
                         newView.setCenter(newView.getSize() / 2.f);
                         targetWindow->setView(newView);

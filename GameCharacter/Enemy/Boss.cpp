@@ -9,6 +9,9 @@ Boss::Boss(float gravity, float range, float speed):  GameCharacter(speed, *Asse
         frame.emplace_back(sf::IntRect(835 * i ,0,835,587));
     }
     GameCharacter::lives = 4;
+    animatorManager.setFrames(*AssetManager::bossFrames);
+    animatorManager.setFrameTime(2);
+    hitSound.setBuffer(*AssetManager::bossDamage);
 }
 
 Bullet* Boss::action(sf::Vector2f heropos) {
@@ -18,11 +21,6 @@ Bullet* Boss::action(sf::Vector2f heropos) {
 
 }
 
-void Boss::animate() {
-    Watcher::animate();
-    setTextureRect(frame[((frameCounter++) % 7) + revert * 7]);
-    if(frameCounter >= 140) frameCounter = 0;
-}
 
 void Boss::notifyObservers() const {
     GameCharacter::notifyObservers();

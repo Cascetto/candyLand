@@ -4,9 +4,9 @@
 
 #include "Timer.h"
 
-sf::Clock Timer::mainClock = sf::Clock();
+Timer* Timer::myTimer = nullptr;
 
-void Timer::registerObserver(ScoreObserver* o) {
+void Timer::registerObserver(TimeObserver* o) {
     observerlist.emplace_back(o);
 
 }
@@ -19,7 +19,7 @@ float Timer::getMainTime() {
     return mainClock.getElapsedTime().asSeconds();
 }
 
-void Timer::removeObserver(ScoreObserver* o) {
+void Timer::removeObserver(TimeObserver* o) {
     observerlist.remove(o);
 }
 
@@ -33,4 +33,14 @@ void Timer::check() {
         clock.restart();
         notifyObservers();
     }
+}
+
+Timer & Timer::getTimer() {
+    if(myTimer == nullptr)
+        myTimer = new Timer();
+    return *myTimer;
+}
+
+void Timer::clearObservers() {
+    observerlist.clear();
 }

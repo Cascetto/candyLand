@@ -7,10 +7,6 @@
 //
 // Created by Emanuele Casciaro on 24/02/2020.
 
-
-
-//todo parser {name:score}
-
 std::vector<Record> RecordInsState::recordList = std::vector<Record>();
 
 RecordInsState::RecordInsState(TargetWindow targetWindow, long int score) : GameState(std::move(targetWindow)), score(score) {

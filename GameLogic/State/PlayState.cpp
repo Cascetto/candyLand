@@ -48,7 +48,9 @@ PlayState:: PlayState(TargetWindow targetWindow) : GameState(std::move(targetWin
     scoreLabel.setPosition(textPos);
     scoreLabel.setOutlineColor(sf::Color::Black);
     scoreLabel.setOutlineThickness(5);
-    Timer::resetMainTime();
+    Timer::getTimer().resetMainTime();
+    Timer::getTimer().registerObserver(&(hero->getAnimator()));
+
 }
 
 void PlayState::handleSincInput() {
@@ -64,13 +66,7 @@ void PlayState::handleSincInput() {
             targetWindow->setView(sf::View(sf::FloatRect(0, 0, size.x, size.y)));
         }
         else if(event.type == sf::Event::KeyPressed) {
-            //TODO RIMUOVI COMANDO 'Z'
-            if(event.key.code == sf::Keyboard::Z) {
-                GameEngine::getGameEngine()->getStateHandler().removeState();
-            }
-            else if(event.key.code == sf::Keyboard::N){
-                enemies.emplace_back(GameFactory::makeEnemy(gravity));
-            } else if(event.key.code == sf::Keyboard::Escape) {
+            if(event.key.code == sf::Keyboard::Escape) {
                 std::vector<sf::Sprite*> objects;
                 for(auto b : background) objects.emplace_back(b);
                 for(auto p : platforms) objects.emplace_back(p);
@@ -80,7 +76,6 @@ void PlayState::handleSincInput() {
                 objects.emplace_back(&(*hero));
                 for(auto l : lives) objects.emplace_back(l);
                 for(int i = 0; i < hero->currwntAmmo; i++) objects.emplace_back(ammo[i]);
-
 
                 std::shared_ptr<GameState> pause = std::make_shared<PauseState>(targetWindow, objects);
                 GameEngine::getGameEngine()->getStateHandler().addState(pause);
@@ -115,9 +110,10 @@ void PlayState::handleControls() {
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
         hero->currwntAmmo = hero->maxAmmo;
+        hero->action(sf::Vector2f());
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        auto bullet = hero->shoot(Timer::getMainTime());
+        auto bullet = hero->shoot(Timer::getTimer().getMainTime());
         if(bullet != nullptr)
             bullets.emplace_back(bullet);
     }
@@ -127,7 +123,7 @@ void PlayState::handleControls() {
 void PlayState::computeFrame() {
     moveView();
     handleControls();
-    //hero->fixHeight(groundLevel);
+    Timer::getTimer().check();
 }
 
 void PlayState::moveView() {
@@ -180,9 +176,7 @@ void PlayState::updateGame() {
         if(!isOutsideRight(enemy->getPosition().x)){
             auto bullet = enemy->action(heroPos);
             if(bullet != nullptr) bullets.emplace_back(bullet);
-                enemy->animate();
         }
-        //enemy->fixHeight(groundLevel);
     }
     auto heroRect = hero->getGlobalBounds();
     for (int i = 0; i < candies.size(); i++) {
@@ -195,12 +189,15 @@ void PlayState::updateGame() {
         if(enemies[i]->getGlobalBounds().intersects(heroRect))
             if(!lives.empty()){
                 enemies.erase(enemies.begin() + i);
+                hero->takeDamage();
                 lives.pop_back();
             }
     }
     if(lives.empty() || isOutsideLeft(heroRect.left + heroRect.width)){
         std::shared_ptr<GameState> insRecordState = std::make_shared<RecordInsState>(targetWindow, score);
+        Timer::getTimer().removeObserver(&hero->getAnimator());
         GameEngine::getGameEngine()->getStateHandler().addState(insRecordState);
+        GameEngine::getGameEngine()->playMain();
     }
 }
 
@@ -212,6 +209,7 @@ bool PlayState::detectCollision(Bullet* bullet) {
             if (bullet->getGlobalBounds().intersects(enemies[i]->getGlobalBounds())) {
                 if (enemies[i]->takeDamage()) {
                     enemies[i]->notifyObservers();
+                    Timer::getTimer().removeObserver(&(enemies[i]->getAnimator()));
                     enemies.erase(enemies.begin() + i);
                 }
                 result = true;
@@ -221,6 +219,7 @@ bool PlayState::detectCollision(Bullet* bullet) {
         if (bullet->getGlobalBounds().intersects(heroRect)) {
             if(!lives.empty()){
                 lives.pop_back();
+                hero->takeDamage();
                 result = true;
             }
         }
@@ -242,16 +241,11 @@ void PlayState::fixHeight() {
     for (auto i : enemies) {
         float toe = i->getPosition().y + i->getGlobalBounds().height;
         float left = i->getPosition().x;
-        float right= left + i->getGlobalBounds().width;
         if(toe > groundLevel){
             i->setPosition(left,groundLevel-(i->getGlobalBounds().height));
             sf::Vector2f newSpeed(i->getSpeed().x, 0);
             i->setSpeed(newSpeed);
         }
-
-
-
-
     }
     float toe = hero->getPosition().y + hero->getGlobalBounds().height;
     float left = hero->getPosition().x;
@@ -263,7 +257,7 @@ void PlayState::fixHeight() {
     }
     for(const auto &i : platforms){
         if(((i->left <= left && left <= i->right) || (i->left <= right && right <= i->right)) &&
-        (i->top <= toe && toe <= i->top + i->height) && (hero->getSpeed().y >= 0)){
+        (i->top <= toe && toe <= i->top + i->height) && (hero->getSpeed().y >= 0) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
             hero->setPosition(sf::Vector2f(left,(i->top - hero->getGlobalBounds().height)));
             sf::Vector2f newSpeed(hero->getSpeed().x, 0);
             hero->setSpeed(newSpeed);
@@ -353,6 +347,14 @@ void PlayState::update() {
     else if(score > 3000 && score <= 4000) level = 4;
     else if(score > 5000 && score <= 6000) level = 5;
     else level = 6;
+}
+
+void PlayState::clear() {
+    for (int i = 0; i < enemies.size(); i++) {
+        Timer::getTimer().removeObserver(&(enemies[i]->getAnimator()));
+        enemies.erase(enemies.begin() + i);
+    }
+    Timer::getTimer().removeObserver(&(hero->getAnimator()));
 }
 
 
