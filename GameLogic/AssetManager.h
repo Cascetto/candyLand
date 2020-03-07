@@ -13,6 +13,7 @@
 class AssetManager {
 public:
     static void load();
+    static void loadTest();
     static void setFrames();
 
     static std::unique_ptr<sf::Texture> backgroundTexture;

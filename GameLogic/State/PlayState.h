@@ -16,6 +16,7 @@
 #include "RecordInsState.h"
 #include <list>
 #include <cstdlib>
+#include "../../unit_testing/gtest_src/googletest/include/gtest/gtest_prod.h"
 
 #define GAME_SPEED 200
 
@@ -30,6 +31,9 @@ public:
     void updateGame();
     void update() override;
     void clear();
+    FRIEND_TEST(COLLISION_SUITE, BULLET_HERO);
+    FRIEND_TEST(COLLISION_SUITE, BULLET_ENEMY);
+    FRIEND_TEST(COLLISION_SUITE, HERO_ENEMY);
 
 private:
     short int level {1};
@@ -59,4 +63,4 @@ private:
 };
 
 
-#endif //ISANGRYREVISED_PLAYSTATE_H
+#endif

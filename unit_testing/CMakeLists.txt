@@ -15,6 +15,8 @@ set(SOURCE_FILES
         ../GameLogic/State/MenuState.cpp
         ../GameLogic/State/RecordState.cpp
         ../GameLogic/State/PlayState.cpp
+        ../GameLogic/State/PauseState.cpp
+        ../GameLogic/State/RecordInsState.cpp
         ../GameLogic/Timer.cpp
         ../GameLogic/GameFactory.cpp
 
@@ -52,7 +54,7 @@ link_libraries(libsfml-audio.2.5.1.dylib
         libsfml-window.dylib)
 
 set(TEST_FILES
-        factoryTest.cpp enemyTest.cpp heroTest.cpp)
+        factoryTest.cpp enemyTest.cpp heroTest.cpp collisionTest.cpp)
 
 add_executable(test ${TEST_FILES} ${SOURCE_FILES})
 

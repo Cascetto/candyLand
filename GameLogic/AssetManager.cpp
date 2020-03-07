@@ -96,6 +96,67 @@ void AssetManager::load() {
     }
 
 }
+void AssetManager::loadTest() {
+    try {
+        backgroundTexture = std::make_unique<sf::Texture>();
+        heroTexture = std::make_unique<sf::Texture>();
+        watcherTexture = std::make_unique<sf::Texture>();
+        brawlerTexture = std::make_unique<sf::Texture>();
+        coconutTexture = std::make_unique<sf::Texture>();
+        platformTexture = std::make_unique<sf::Texture>();
+        archerTexture = std::make_unique<sf::Texture>();
+        bossTexture = std::make_unique<sf::Texture>();
+        candyTexture = std::make_unique<sf::Texture>();
+        heartTexture = std::make_unique<sf::Texture>();
+
+        mainFont = std::make_unique<sf::Font>();
+
+        heroFrames = std::make_unique<std::vector<sf::IntRect>>();
+        archerFrames = std::make_unique<std::vector<sf::IntRect>>();
+        brawlerFrames = std::make_unique<std::vector<sf::IntRect>>();
+        watcherFrames = std::make_unique<std::vector<sf::IntRect>>();
+        bossFrames = std::make_unique<std::vector<sf::IntRect>>();
+
+        heroJumo = std::make_unique<sf::SoundBuffer>();
+        heroShoot = std::make_unique<sf::SoundBuffer>();
+        heroDamage = std::make_unique<sf::SoundBuffer>();
+        enemyShoot = std::make_unique<sf::SoundBuffer>();
+        brawlerDamage = std::make_unique<sf::SoundBuffer>();
+        archerDamage = std::make_unique<sf::SoundBuffer>();
+        watcherDamage = std::make_unique<sf::SoundBuffer>();
+        bossDamage = std::make_unique<sf::SoundBuffer>();
+        powerUp = std::make_unique<sf::SoundBuffer>();
+        reload = std::make_unique<sf::SoundBuffer>();
+
+        backgroundTexture->loadFromFile("../../Assets/Images/Background.png");
+        heroTexture->loadFromFile("../../Assets/Images/isAnimatedFull.png");
+        watcherTexture->loadFromFile("../../Assets/Images/dinoWalk.png");
+        brawlerTexture->loadFromFile("../../Assets/Images/Lantern.png");
+        archerTexture->loadFromFile("../../Assets/Images/archer.png");
+        coconutTexture->loadFromFile("../../Assets/Images/coconut.png");
+        platformTexture->loadFromFile( "../../Assets/Images/platform.png");
+        bossTexture->loadFromFile("../../Assets/Images/BOSS.png");
+        candyTexture->loadFromFile("../../Assets/Images/lolly.png");
+        heartTexture->loadFromFile("../../Assets/Images/heart.png");
+
+        mainFont->loadFromFile("../../Assets/Font/mainFont.otf");
+
+        heroJumo->loadFromFile("../../Assets/Audio/heroJump.wav");
+        heroDamage->loadFromFile("../../Assets/Audio/heroDamage.wav");
+        heroShoot->loadFromFile("../../Assets/Audio/heroShoot.wav");
+        enemyShoot->loadFromFile("../../Assets/Audio/enemyShoot.wav");
+        archerDamage->loadFromFile("../../Assets/Audio/archerDamage.wav");
+        watcherDamage->loadFromFile("../../Assets/Audio/watcherDamage.wav");
+        brawlerDamage->loadFromFile("../../Assets/Audio/brawlerDamage.wav");
+        bossDamage->loadFromFile("../../Assets/Audio/bossDamage.wav");
+        powerUp->loadFromFile("../../Assets/Audio/powerUp.wav");
+        reload->loadFromFile("../../Assets/Audio/reload.wav");
+
+    } catch (const std::exception& exception) {
+        std::cerr << exception.what() << std::endl;
+    }
+
+}
 
 void AssetManager::setFrames() {
     //HERO

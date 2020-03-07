@@ -18,7 +18,6 @@
 class GameFactory {
 public:
     static Bullet* makeBullet(sf::Vector2f direction, bool friendly = false);
-    static GameCharacter* makeEnemy(float gravity);
     static GameCharacter* makeWatcher(float gravity);
     static GameCharacter* makeArcher(float gravity);
     static GameCharacter* makeBrawlewr(float gravity);
