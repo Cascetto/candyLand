@@ -8,11 +8,11 @@
 
 #include <cmath>
 #include "SFML/Graphics.hpp"
-#include "../GameLogic/ScoreSubject.h"
-#include "../GameLogic/TimeObserver.h"
+#include "../GameLogic/Subject.h"
+#include "../GameLogic/Observer.h"
 #include "../GameObjects/Bullet.h"
 
-class GameCharacter : public sf::Sprite, public ScoreSubject {
+class GameCharacter : public sf::Sprite, public Subject {
 public:
     virtual void move(sf::Vector2f direction);
     int revert{0};
@@ -20,10 +20,10 @@ public:
     virtual Bullet* action(sf::Vector2f heroPos) = 0;
     const sf::Vector2f &getSpeed() const;
     void setSpeed(const sf::Vector2f &speed);
-    void removeObserver(ScoreObserver *o) override;
-    void registerObserver(ScoreObserver *o) override;
+    void removeObserver(Observer *o) override;
+    void registerObserver(Observer *o) override;
     void notifyObservers() const override;
-    class Animator : public TimeObserver {
+    class Animator : public Observer {
     public:
         explicit Animator(GameCharacter* obj);
         void update() override;
@@ -61,7 +61,7 @@ protected:
 
 private:
     const float gravity;
-    std::vector<ScoreObserver*> observerList;
+    std::vector<Observer*> observerList;
 };
 
 

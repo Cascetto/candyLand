@@ -11,7 +11,6 @@
 #include "../../GameObjects/Bullet.h"
 #include "../../GameObjects/Platform.h"
 #include "../../GameCharacter/Enemy/Boss.h"
-#include "../../GameObjects/Candy.h"
 #include "PauseState.h"
 #include "RecordInsState.h"
 #include <list>
@@ -20,7 +19,7 @@
 
 #define GAME_SPEED 200
 
-class PlayState : public GameState, public ScoreObserver {
+class PlayState : public GameState, public Observer {
 public:
     explicit PlayState(TargetWindow targetWindow);
     void handleSyncInput() override;
@@ -53,7 +52,7 @@ private:
     void fixHeight();
     std::vector<Platform*> platforms;
     void generate(float startPoint, float endPoint);
-    std::vector<Candy*> candies;
+    std::vector<sf::Sprite*> candies;
     std::vector<sf::Sprite*> lives;
     std::vector<sf::Sprite*> ammo;
     bool checkBoss();

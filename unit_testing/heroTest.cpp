@@ -8,7 +8,8 @@ class HERO_SUITE : public ::testing::Test {
 
 protected:
     virtual void SetUp() {
-        AssetManager::loadTest();
+        AssetManager::load();
+        AssetManager::setFrames();
         hero = new Hero(5, 1);
     }
 

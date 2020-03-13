@@ -4,7 +4,7 @@
 
 #include "Platform.h"
 
-Platform::Platform(): sf::Sprite(*AssetManager::platformTexture), left(0), right(width), top(0) {
+Platform::Platform(): sf::Sprite(AssetManager::textures.at("PLATFORM")), left(0), right(width), top(0) {
     setTextureRect(sf::IntRect(0,0,width,height));
 }
 

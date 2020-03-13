@@ -11,7 +11,8 @@ class FACTORY_SUITE : public ::testing::Test {
 
 protected:
     virtual void SetUp() {
-        AssetManager::loadTest();
+        AssetManager::load();
+        AssetManager::setFrames();
     }
 
     virtual void TearDown() {

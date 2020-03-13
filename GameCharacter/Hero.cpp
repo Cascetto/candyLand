@@ -5,15 +5,15 @@
 #include "Hero.h"
 
 
-Hero::Hero(float speed, float g) : GameCharacter(speed, *AssetManager::heroTexture, g), currwntAmmo{maxAmmo} {
+Hero::Hero(float speed, float g) : GameCharacter(speed, AssetManager::textures.at("HERO"), g), currentAmmo{maxAmmo} {
     setTextureRect(sf::IntRect(0, 0, 80, 65));
-    animatorManager.setFrames(*AssetManager::heroFrames);
+    animatorManager.setFrames(AssetManager::frames.at("HERO_FRAMES"));
     animatorManager.setFrameTime(2);
-    hitSound.setBuffer(*AssetManager::heroDamage);
-    shootSound.setBuffer(*AssetManager::heroShoot);
-    jumpSound.setBuffer(*AssetManager::heroJumo);
-    powerUpSound.setBuffer(*AssetManager::powerUp);
-    reloadSound.setBuffer(*AssetManager::reload);
+    hitSound.setBuffer(AssetManager::sounds.at("HERO_DAMAGE"));
+    shootSound.setBuffer(AssetManager::sounds.at("HERO_SHOOT"));
+    jumpSound.setBuffer(AssetManager::sounds.at("HERO_JUMP"));
+    powerUpSound.setBuffer(AssetManager::sounds.at("POWER_UP"));
+    reloadSound.setBuffer(AssetManager::sounds.at("RELOAD"));
 }
 
 float Hero::getRof() const {
@@ -27,13 +27,13 @@ void Hero::jump() {
     }
 Bullet* Hero::shoot(float time) {
     Bullet* bullet = nullptr;
-    if((time - lastTime >= rof) && (currwntAmmo > 0)) {
+    if((time - lastTime >= rof) && (currentAmmo > 0)) {
         bullet = GameFactory::makeBullet(sf::Vector2f(revert == 0 ? 1 : -1, 0), true);
         bullet->setPosition(getPosition());
         bullet->move(getGlobalBounds().width / 2, 0);
         bullet->setScale(0.33f, 0.33f);
         lastTime = time;
-        currwntAmmo--;
+        currentAmmo--;
         shootSound.play();
     }
     return bullet;

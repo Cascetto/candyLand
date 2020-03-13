@@ -8,7 +8,7 @@
 GameCharacter::GameCharacter(float speed, sf::Texture &texture, float g) : speed(sf::Vector2f(speed,0)), gravity(g),
                                                                            animatorManager(GameCharacter::Animator(this)) {
     setTexture(texture);
-    shootSound.setBuffer(*AssetManager::enemyShoot);
+    shootSound.setBuffer(AssetManager::sounds.at("ENEMY_SHOOT"));
 }
 
 void GameCharacter::move(sf::Vector2f direction) {
@@ -50,14 +50,14 @@ void GameCharacter::notifyObservers() const {
         observer->update();
 }
 
-void GameCharacter::removeObserver(ScoreObserver *o) {
+void GameCharacter::removeObserver(Observer *o) {
     for(int i = 0; i < observerList.size(); i++) {
         if(observerList[i] == o)
             observerList.erase(observerList.begin() + i);
     }
 }
 
-void GameCharacter::registerObserver(ScoreObserver *o) {
+void GameCharacter::registerObserver(Observer *o) {
     bool found = false;
     for(int i = 0; i < observerList.size() && !found; i++) {
         if(observerList[i] == o)

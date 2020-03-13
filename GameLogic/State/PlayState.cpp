@@ -8,8 +8,8 @@
 float PlayState::gravity = 0.04f;
 
 PlayState:: PlayState(TargetWindow targetWindow) : GameState(std::move(targetWindow)) {
-    background.emplace_back(new sf::Sprite(*AssetManager::backgroundTexture));
-    background.emplace_back(new sf::Sprite(*AssetManager::backgroundTexture));
+    background.emplace_back(new sf::Sprite(AssetManager::textures.at("BACKGROUND")));
+    background.emplace_back(new sf::Sprite(AssetManager::textures.at("BACKGROUND")));
     float scale = this->targetWindow->getView().getSize().y / background[0]->getGlobalBounds().height;
     background[0]->scale(scale, scale);
     background[1]->scale(scale, scale);
@@ -17,11 +17,7 @@ PlayState:: PlayState(TargetWindow targetWindow) : GameState(std::move(targetWin
     groundLevel = (7.98f / 11.85f) * background[0]->getGlobalBounds().height;
     generate(background[0]->getPosition().x, background[0]->getPosition().x + background[0]->getGlobalBounds().width);
     generate(background[1]->getPosition().x, background[1]->getPosition().x + background[1]->getGlobalBounds().width);
-/*
-    sf::View newView = this->targetWindow->getView();
-    newView.setCenter(newView.getSize() / 2.f);
-    this->targetWindow->setView(newView);
-*/
+
     PlayState::gravity = (this->targetWindow->getView().getSize().y) / 4.5f;
 
     hero = std::make_shared<Hero>(20, 0);
@@ -29,14 +25,14 @@ PlayState:: PlayState(TargetWindow targetWindow) : GameState(std::move(targetWin
     hero->scale(3, 3);
     for(int i = 0; i <  5; i++){
         sf::Sprite* heart = new sf::Sprite;
-        heart->setTexture(*AssetManager::heartTexture);
+        heart->setTexture(AssetManager::textures.at("HEART"));
         heart->scale(0.1f, 0.1f);
         heart->setPosition(20 + heart->getGlobalBounds().width * i, 20);
         lives.emplace_back(heart);
     }
     for(int i = 0; i < hero->maxAmmo; i++){
         sf::Sprite* coconut = new sf::Sprite;
-        coconut->setTexture(*AssetManager::coconutTexture);
+        coconut->setTexture(AssetManager::textures.at("BULLET"));
         coconut->scale(0.4f, 0.4f);
         coconut->setPosition(20 + coconut->getGlobalBounds().width * i, 200);
         ammo.emplace_back(coconut);
@@ -75,7 +71,7 @@ void PlayState::handleSyncInput() {
                 for(auto b : bullets) objects.emplace_back(b);
                 objects.emplace_back(&(*hero));
                 for(auto l : lives) objects.emplace_back(l);
-                for(int i = 0; i < hero->currwntAmmo; i++) objects.emplace_back(ammo[i]);
+                for(int i = 0; i < hero->currentAmmo; i++) objects.emplace_back(ammo[i]);
 
                 std::shared_ptr<GameState> pause = std::make_shared<PauseState>(targetWindow, objects);
                 GameEngine::getGameEngine()->getStateHandler().addState(pause);
@@ -109,7 +105,7 @@ void PlayState::handleControls() {
         }
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-        hero->currwntAmmo = hero->maxAmmo;
+        hero->currentAmmo = hero->maxAmmo;
         hero->action(sf::Vector2f());
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
@@ -153,7 +149,7 @@ void PlayState::drawFrame() {
     for(const auto& c : candies) targetWindow->draw(*c);
     targetWindow->draw(*hero);
     for(const auto& heart : lives) targetWindow->draw(*heart);
-    for(int i = 0; i < hero->currwntAmmo; i++) targetWindow->draw(*ammo[i]);
+    for(int i = 0; i < hero->currentAmmo; i++) targetWindow->draw(*ammo[i]);
 
 
     targetWindow->draw(scoreLabel);

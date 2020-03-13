@@ -4,14 +4,14 @@
 
 #include "Watcher.h"
 
-Watcher::Watcher(float range, float g) : GameCharacter(0, *AssetManager::watcherTexture, g), range(range) {
+Watcher::Watcher(float range, float g) : GameCharacter(0, AssetManager::textures.at("WATCHER"), g), range(range) {
     setTextureRect(sf::IntRect(0, 0, 680, 472));
     for (int i = 0; i < 20; i++)
         frame.emplace_back(sf::IntRect(680 * i,0,680,430));
     GameCharacter::lives = 1;
-    animatorManager.setFrames(*AssetManager::watcherFrames);
+    animatorManager.setFrames(AssetManager::frames.at("WATCHER_FRAMES"));
     animatorManager.setFrameTime(1);
-    hitSound.setBuffer(*AssetManager::watcherDamage);
+    hitSound.setBuffer(AssetManager::sounds.at("WATCHER_DAMAGE"));
 }
 
 Bullet* Watcher::action(sf::Vector2f heroPos) {

@@ -7,7 +7,8 @@
 class ENEMY_SUITE : public ::testing::Test {
 protected:
     virtual void SetUp() {
-        AssetManager::loadTest();
+        AssetManager::load();
+        AssetManager::setFrames();
         TargetWindow targetWindow = std::make_shared<sf::RenderWindow>();
         PlayState state = PlayState(targetWindow);
     }

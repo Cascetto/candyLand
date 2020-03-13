@@ -31,7 +31,6 @@ set(SOURCE_FILES
         GameCharacter/Enemy/Brawler.cpp
         GameCharacter/Enemy/Archer.cpp
         GameCharacter/Enemy/Boss.cpp
-        GameObjects/Candy.cpp
         )
 
 add_subdirectory(unit_testing)

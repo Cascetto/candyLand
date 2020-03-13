@@ -33,7 +33,7 @@ const Menu::MenuItem::TYPE& Menu::MenuItem::getType() const {
 }
 
 Menu::Menu(Menu::STYLE style) : style(style){
-    if(!font.loadFromFile("../Assets/Font/mainFont.otf"))
+    if(!font.loadFromFile("./Assets/Font/mainFont.otf"))
         std::cerr << "Font non trovato" << std::endl;
     if(style == Menu::STYLE::MAIN) {
         itemList.emplace_back(std::make_shared<MenuItem>(MenuItem::TYPE::START));

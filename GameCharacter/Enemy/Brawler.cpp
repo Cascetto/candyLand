@@ -4,14 +4,14 @@
 
 #include "Brawler.h"
 
-Brawler::Brawler(float speed, float g) : GameCharacter(speed, *AssetManager::brawlerTexture, g) {
+Brawler::Brawler(float speed, float g) : GameCharacter(speed, AssetManager::textures.at("BRAWLER"), g) {
     setTextureRect(sf::IntRect(0, 0,579 ,763));
     for (int i = 0; i < 20; i++) {
         frame.emplace_back(sf::IntRect(579 * i ,0,579,763));
     }
-    animatorManager.setFrames(*AssetManager::brawlerFrames);
+    animatorManager.setFrames(AssetManager::frames.at("BRAWLER_FRAMES"));
     animatorManager.setFrameTime(1);
-    hitSound.setBuffer(*AssetManager::brawlerDamage);
+    hitSound.setBuffer(AssetManager::sounds.at("BRAWLER_DAMAGE"));
 
 }
 

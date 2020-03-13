@@ -6,7 +6,7 @@
 
 Timer* Timer::myTimer = nullptr;
 
-void Timer::registerObserver(TimeObserver* o) {
+void Timer::registerObserver(Observer* o) {
     observerlist.emplace_back(o);
 
 }
@@ -19,7 +19,7 @@ float Timer::getMainTime() {
     return mainClock.getElapsedTime().asSeconds();
 }
 
-void Timer::removeObserver(TimeObserver* o) {
+void Timer::removeObserver(Observer* o) {
     observerlist.remove(o);
 }
 

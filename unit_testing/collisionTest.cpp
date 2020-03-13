@@ -9,8 +9,8 @@
 class COLLISION_SUITE : public :: testing::Test{
 protected:
     virtual void setUp(){
-        AssetManager::loadTest();
-
+        AssetManager::load();
+        AssetManager::setFrames();
     };
     virtual void tearDown(){
 

@@ -12,7 +12,6 @@
 #include "../GameCharacter/Enemy/Archer.h"
 #include "../GameObjects/Platform.h"
 #include "../GameCharacter/Enemy/Boss.h"
-#include "../GameObjects/Candy.h"
 
 
 class GameFactory {
@@ -22,8 +21,9 @@ public:
     static GameCharacter* makeArcher(float gravity);
     static GameCharacter* makeBrawlewr(float gravity);
     static GameCharacter* makeBoss(float gravity);
-    static Candy* makeCandy();
+    static sf::Sprite* makeCandy();
     static Platform* makePlatform();
+    virtual ~GameFactory() = 0;
 };
 
 

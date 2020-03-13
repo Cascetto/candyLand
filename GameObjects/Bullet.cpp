@@ -4,15 +4,11 @@
 
 #include "Bullet.h"
 
-Bullet::Bullet(sf::Vector2f direction, float speed, bool f) : sf::Sprite(*AssetManager::coconutTexture),
+Bullet::Bullet(sf::Vector2f direction, float speed, bool f) : sf::Sprite(AssetManager::textures.at("BULLET")),
     component(direction), mag(speed), friendly(f) {}
 
 void Bullet::move() {
     sf::Transformable::move(component * mag);
-}
-
-void Bullet::move(float x, float y) {
-    sf::Sprite::move(x, y);
 }
 
 void Bullet::setPosition(sf::Vector2f position) {

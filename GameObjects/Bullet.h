@@ -15,7 +15,7 @@ public:
     Bullet(sf::Vector2f direction, float speed, bool f = false);
     void setPosition(sf::Vector2f position);
     void move();
-    void move(float offSetX, float offSetY);
+    using sf::Transformable::move;
     bool isFriendly();
     const sf::Vector2f &getComponent() const;
 

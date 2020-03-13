@@ -31,7 +31,7 @@ void GameEngine::init() {
         stateHandler.addState(std::make_shared<MenuState>(gameWindow));
         AssetManager::load();
         AssetManager::setFrames();
-        soundtrack.openFromFile("../Assets/Audio/mainOst.wav");
+        soundtrack.openFromFile("./Assets/Audio/mainOst.wav");
         soundtrack.setLoop(true);
         soundtrack.play();
     }
@@ -60,7 +60,7 @@ GameEngine::~GameEngine() {
 
 void GameEngine::playMain() {
     soundtrack.stop();
-    soundtrack.openFromFile("../Assets/Audio/mainOst.wav");
+    soundtrack.openFromFile("./Assets/Audio/mainOst.wav");
     soundtrack.setVolume(0);
     soundtrack.play();
     timer.clearObservers();
@@ -68,8 +68,8 @@ void GameEngine::playMain() {
 
 void GameEngine::playGameOst() {
     soundtrack.stop();
-    soundtrack.openFromFile("../Assets/Audio/playOst.wav");
+    soundtrack.openFromFile("./Assets/Audio/playOst.wav");
     soundtrack.setPlayingOffset(sf::seconds(2.7f));
-    soundtrack.setVolume(0);
+    soundtrack.setVolume(33.3f);
     soundtrack.play();
 }

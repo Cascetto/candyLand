@@ -37,8 +37,8 @@ GameCharacter* GameFactory::makeWatcher(float gravity) {
     return enemy;
 }
 
-Candy* GameFactory::makeCandy() {
-    auto candy = new Candy();
+sf::Sprite* GameFactory::makeCandy() {
+    auto candy = new sf::Sprite(AssetManager::textures.at("CANDY"));
     candy->scale(0.2, 0.2);
     return candy;
 }

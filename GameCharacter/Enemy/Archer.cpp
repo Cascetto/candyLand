@@ -5,7 +5,7 @@
 #include "Archer.h"
 
 
-Archer::Archer(float gravity) : GameCharacter(0, *AssetManager::archerTexture, gravity){
+Archer::Archer(float gravity) : GameCharacter(0, AssetManager::textures.at("ARCHER"), gravity){
     for (int i = 0; i < 20; i++) {
         frame.emplace_back(sf::IntRect(240 * i ,0,240,439));
     }
@@ -13,10 +13,10 @@ Archer::Archer(float gravity) : GameCharacter(0, *AssetManager::archerTexture, g
     lastTime = Timer::getTimer().getMainTime() + static_cast<float>(rand() % 1001 - 500) / 10000;
     rof = static_cast<float>(rand() % 9 + 6) /  3.f;
     GameCharacter::lives = 3;
-    animatorManager.setFrames(*AssetManager::archerFrames);
+    animatorManager.setFrames(AssetManager::frames.at("ARCHER_FRAMES"));
     animatorManager.setFrameTime(1);
 
-    hitSound.setBuffer(*AssetManager::archerDamage);
+    hitSound.setBuffer(AssetManager::sounds.at("ARCHER_DAMAGE"));
 }
 
 

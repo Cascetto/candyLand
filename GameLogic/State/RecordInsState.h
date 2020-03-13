@@ -22,7 +22,7 @@ public:
     void drawFrame() override;
     static std::vector<Record> parser();
 private:
-    char str[4] = {'_', '_', '_', '\0'};
+    char str[4] {'_', '_', '_', '\0'};
     int index{0};
     int newRecordPos {0};
     long int score {0};
