@@ -12,3 +12,4 @@ Platform a scorrimento laterale
 
 ![Game](Assets/Images/Game.png)
 ![MainWindow](Assets/Images/MainWindow.png)
+![Gif](https://media.giphy.com/media/gfHH0GkPP6PFNQD5rT/giphy.gif)
