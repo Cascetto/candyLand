@@ -123,9 +123,7 @@ void Menu::backward() {
     else active--;
     itemList[active]->setFillColor(sf::Color::Red);
 }
-const Menu::STYLE& Menu::getStyle() const {
-    return style;
-}
+
 const Menu::MenuItem::TYPE& Menu::getAction() const {
     return itemList[active]->getType();
 }

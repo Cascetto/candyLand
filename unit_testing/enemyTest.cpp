@@ -50,12 +50,13 @@ TEST_F(ENEMY_SUITE, TEST_WATCHER_ACTION) {
     Timer::getTimer();
     auto archer = GameFactory::makeArcher(0);
     sf::Clock clock;
-    while (clock.getElapsedTime() < sf::seconds(2)){}
+    clock.restart();
+    while (clock.getElapsedTime() < sf::seconds(4)){}
     auto bullet = archer->action(sf::Vector2f(2,0));
     ASSERT_NE(bullet, nullptr);
     ASSERT_GT(bullet->getComponent().x,0);
     clock.restart();
-    while (clock.getElapsedTime() < sf::seconds(2)){}
+    while (clock.getElapsedTime() < sf::seconds(4)){}
     bullet = archer->action(sf::Vector2f(-1,0));
     ASSERT_NE(bullet, nullptr);
     ASSERT_LT(bullet->getComponent().x,0);

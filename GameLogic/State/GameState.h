@@ -16,7 +16,7 @@ typedef std::shared_ptr<sf::RenderWindow> TargetWindow;
 class GameState {
 public:
     explicit GameState(TargetWindow targetWindow);
-    virtual void handleSincInput() = 0;
+    virtual void handleSyncInput() = 0;
     virtual void computeFrame() = 0;
     virtual void drawFrame() = 0;
 

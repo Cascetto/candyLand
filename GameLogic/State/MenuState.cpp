@@ -8,7 +8,7 @@ MenuState::MenuState(TargetWindow targetWindow) : GameState(std::move(targetWind
     stars = Star::createStars(this->targetWindow);
 }
 
-void MenuState::handleSincInput() {
+void MenuState::handleSyncInput() {
     sf::Event event;
     while(targetWindow->pollEvent(event)) {
         if(event.type == sf::Event::Closed)

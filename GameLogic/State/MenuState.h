@@ -16,7 +16,7 @@
 class MenuState : public GameState {
 public:
     explicit MenuState(TargetWindow targetWindow);
-    void handleSincInput() override;
+    void handleSyncInput() override;
     void computeFrame() override;
     void drawFrame() override;
 private:

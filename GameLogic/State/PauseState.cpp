@@ -26,7 +26,7 @@ void PauseState::computeFrame() {
 
 }
 
-void PauseState::handleSincInput() {
+void PauseState::handleSyncInput() {
     sf::Event event;
 
     while(targetWindow->pollEvent(event)) {

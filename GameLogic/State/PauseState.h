@@ -13,7 +13,7 @@
 class PauseState : public GameState {
 public:
     explicit PauseState(TargetWindow targetWindow, std::vector<sf::Sprite*> prevScreen);
-    void handleSincInput() override;
+    void handleSyncInput() override;
     void computeFrame() override;
     void drawFrame() override;
 

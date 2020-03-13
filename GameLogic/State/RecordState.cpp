@@ -30,7 +30,7 @@ RecordState::RecordState(TargetWindow targetWindow) : GameState(std::move(target
 
 }
 
-void RecordState::handleSincInput() {
+void RecordState::handleSyncInput() {
     sf::Event event;
     while(targetWindow->pollEvent(event)) {
         if(event.type == sf::Event::Closed)

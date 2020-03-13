@@ -23,14 +23,15 @@ class GameEngine {
 public:
     GameEngine();
     ~GameEngine();
+
     static std::shared_ptr<GameEngine> getGameEngine();
 
     const std::shared_ptr<sf::RenderWindow>& getWindow() const;
+
     StateHandler& getStateHandler();
 
     void init();
     void start();
-    void stop();
 
     Timer timer;
 

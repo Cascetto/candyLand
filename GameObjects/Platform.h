@@ -18,10 +18,6 @@ public:
     const float height {98};
     const float width {424};
     void setPosition(float x, float y);
-
-
-
-
 };
 
 

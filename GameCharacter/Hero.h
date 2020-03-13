@@ -30,7 +30,7 @@ public:
     int currwntAmmo;
 
 private:
-    float rof = 1.f / 2;
+    float rof {1.f / 2};
     float lastTime {0};
     sf::Sound jumpSound;
     sf::Sound powerUpSound;

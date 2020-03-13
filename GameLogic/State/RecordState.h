@@ -13,7 +13,7 @@
 class RecordState : public GameState {
 public:
     explicit RecordState(TargetWindow targetWindow);
-    void handleSincInput() override;
+    void handleSyncInput() override;
     void computeFrame() override;
     void drawFrame() override;
 private:

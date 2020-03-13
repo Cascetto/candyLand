@@ -23,7 +23,7 @@
 class PlayState : public GameState, public ScoreObserver {
 public:
     explicit PlayState(TargetWindow targetWindow);
-    void handleSincInput() override;
+    void handleSyncInput() override;
     void handleControls();
     void computeFrame() override;
     void drawFrame() override;

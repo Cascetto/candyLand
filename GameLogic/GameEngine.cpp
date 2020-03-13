@@ -42,7 +42,7 @@ void GameEngine::start() {
         if(gameClock.getElapsedTime().asSeconds() >= SLEEP_TIME) {
             timer.check();
 
-            stateHandler.getState()->handleSincInput();
+            stateHandler.getState()->handleSyncInput();
             stateHandler.getState()->computeFrame();
             stateHandler.getState()->drawFrame();
 
@@ -53,9 +53,6 @@ void GameEngine::start() {
     }
 }
 
-void GameEngine::stop() {
-
-}
 
 GameEngine::~GameEngine() {
     soundtrack.stop();
@@ -64,7 +61,7 @@ GameEngine::~GameEngine() {
 void GameEngine::playMain() {
     soundtrack.stop();
     soundtrack.openFromFile("../Assets/Audio/mainOst.wav");
-    soundtrack.setVolume(100);
+    soundtrack.setVolume(0);
     soundtrack.play();
     timer.clearObservers();
 }
@@ -73,6 +70,6 @@ void GameEngine::playGameOst() {
     soundtrack.stop();
     soundtrack.openFromFile("../Assets/Audio/playOst.wav");
     soundtrack.setPlayingOffset(sf::seconds(2.7f));
-    soundtrack.setVolume(33.3f);
+    soundtrack.setVolume(0);
     soundtrack.play();
 }

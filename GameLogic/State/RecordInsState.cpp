@@ -40,7 +40,7 @@ void RecordInsState::computeFrame() {
     }
 }
 
-void RecordInsState::handleSincInput() {
+void RecordInsState::handleSyncInput() {
     sf::Event event;
     while (targetWindow->pollEvent(event)) {
         if(event.type == sf::Event::Closed)

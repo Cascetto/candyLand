@@ -22,8 +22,7 @@ public:
             RESUME,
             QUIT,
             SCORE,
-            INFO,
-            NONE
+            INFO
         };
         explicit MenuItem(MenuItem::TYPE type);
         const TYPE& getType() const;
@@ -43,7 +42,6 @@ public:
     void forward();
     void backward();
     const MenuItem::TYPE& getAction() const;
-    const STYLE& getStyle() const;
 private:
     int active {0};
     int count {0};

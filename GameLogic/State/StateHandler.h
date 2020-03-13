@@ -19,6 +19,7 @@ public:
     void addState(const std::shared_ptr<GameState>& topState);
     void removeState();
     const std::shared_ptr<GameState>& getState();
+
 private:
     std::stack<std::shared_ptr<GameState>> livingStates;
 

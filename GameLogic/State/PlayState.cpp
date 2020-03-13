@@ -53,7 +53,7 @@ PlayState:: PlayState(TargetWindow targetWindow) : GameState(std::move(targetWin
 
 }
 
-void PlayState::handleSincInput() {
+void PlayState::handleSyncInput() {
     sf::Event event {};
     while(targetWindow->pollEvent(event)) {
         if(event.type == sf::Event::Closed) {

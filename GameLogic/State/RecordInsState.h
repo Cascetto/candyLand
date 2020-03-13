@@ -18,7 +18,7 @@ class RecordInsState : public GameState {
 public:
     RecordInsState(TargetWindow targetWindow, long int score);
     void computeFrame() override ;
-    void handleSincInput() override;
+    void handleSyncInput() override;
     void drawFrame() override;
     static std::vector<Record> parser();
 private:
